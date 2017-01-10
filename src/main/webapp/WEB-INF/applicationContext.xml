@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   					   http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+    THIS FILE IS IMPORTANT. READ:
+    http://stackoverflow.com/questions/3652090/difference-between-applicationcontext-xml-and-spring-servlet-xml-in-spring
+    and
+    http://stackoverflow.com/questions/19826228/spring-web-security-web-xml-mvc-dispatcher-bean-is-created-twice
+    BEFORE MODIFICATION
+    -->
+
+    <!--DO NOT MERGE THIS CONTEXT. OTHERWISE DUPLICATED BEANS FOR HAZELCAST OR JOB'S EXIST-->
+    <import resource="mvc-dispatcher-servlet.xml"/><!--context for mvc-dispatcher servlet in web.xml-->
+
+</beans>

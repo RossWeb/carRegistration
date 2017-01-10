@@ -2,10 +2,9 @@ package com.app.registration.config;
 
 import org.hibernate.SessionFactory;
 import org.hsqldb.jdbc.JDBCDataSource;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.*;
+import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -27,8 +26,16 @@ import java.util.Properties;
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
+@PropertySource("classpath:config/config.properties")
 @ComponentScan(basePackages = "com.app.registration")
 public class AppConfig extends WebMvcConfigurerAdapter {
+
+    private Environment environment;
+
+    @Autowired
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
+    }
 
     @Bean
     public ViewResolver viewResolver() {
@@ -44,8 +51,8 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     public Properties getJPAProperties() {
         final Properties properties = new Properties();
 
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
-        properties.setProperty("hibernate.hbm2ddl.auto", "create");
+        properties.setProperty("hibernate.dialect", environment.getProperty("hibernate.dialect"));
+        properties.setProperty("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
         properties.setProperty("hibernate.show_sql", "true");
         properties.setProperty("hibernate.format_sql", "true");
         return properties;
@@ -72,9 +79,9 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     @Bean(name = "dataSource")
     public DataSource getDataSource() {
         JDBCDataSource dataSource = new JDBCDataSource();
-        dataSource.setUrl("jdbc:hsqldb://localhost:8081/carRegistration/mydb.db");
-        dataSource.setUser("user");
-        dataSource.setPassword("pass");
+        dataSource.setUrl(environment.getProperty("datasource.url"));
+        dataSource.setUser(environment.getProperty("datasource.user"));
+        dataSource.setPassword(environment.getProperty("datasource.pass"));
         return dataSource;
     }
 

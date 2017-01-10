@@ -18,6 +18,7 @@ public class AddressEntity implements Serializable{
     private String street;
     private String postCode;
     private String city;
+    private String signs;
 
     @Id
     @Column(name = "ID", nullable = false)
@@ -55,5 +56,14 @@ public class AddressEntity implements Serializable{
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    @Column(name = "SIGNS", nullable = false)
+    public String getSigns() {
+        return signs;
+    }
+
+    public void setSigns(String signs) {
+        this.signs = signs;
     }
 }

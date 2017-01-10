@@ -10,7 +10,6 @@ import com.app.registration.service.PersonService;
 import com.app.registration.service.PlateService;
 import com.app.registration.service.ProofRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -72,9 +71,9 @@ public class RegistrationController {
     @ResponseBody
     public ProofRegistrationTemplateDataResponse getCardVehicleNumber(@RequestBody ProofRegistrationTemplateDataRequest registrationTemplateDataRequest) {
         ProofRegistrationTemplateDataResponse response = new ProofRegistrationTemplateDataResponse();
-        String city = personService.getCityPersonByPesel(registrationTemplateDataRequest.getPesel());
+        String sign = personService.getSignPersonByPesel(registrationTemplateDataRequest.getPesel());
         response.setCardVehicleNumber(proofRegistrationService.getProofRegistrationNumber(true));
-        response.setPlateNumbers(plateService.findUnusedByCity(PLATE_COUNT,city).stream().map(PlateDto::getPlateNumber).collect(Collectors.toList()));
+        response.setPlateNumbers(plateService.findUnusedBySign(PLATE_COUNT,sign).stream().map(PlateDto::getPlateNumber).collect(Collectors.toList()));
         return response;
     }
 

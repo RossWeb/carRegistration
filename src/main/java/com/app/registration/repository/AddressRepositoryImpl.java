@@ -3,7 +3,9 @@ package com.app.registration.repository;
 import com.app.registration.model.AddressEntity;
 import com.app.registration.repository.CriteriaFilter.AddressCriteriaFilter;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.expression.Expression;
 import org.springframework.stereotype.Repository;
@@ -37,6 +39,14 @@ public class AddressRepositoryImpl extends AbstractGenericRepositoryWithSession<
     @Override
     public List<AddressEntity> findAll() {
         Criteria addressCriteria =  getSession().createCriteria(AddressEntity.class);
+        return addressCriteria.list();
+    }
+
+    @Override
+    public List<String> getSignsList() {
+        Criteria addressCriteria =  getSession().createCriteria(AddressEntity.class);
+        addressCriteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+        addressCriteria.setProjection(Projections.property("signs"));
         return addressCriteria.list();
     }
 }

@@ -10,9 +10,11 @@ import java.util.List;
  */
 public interface AddressRepository extends GenericRepository<AddressEntity> {
 
-    public List<AddressEntity> find(AddressCriteriaFilter addressCriteriaFilter);
+    List<AddressEntity> find(AddressCriteriaFilter addressCriteriaFilter);
 
-    public AddressEntity findById(Long id);
+    AddressEntity findById(Long id);
 
-    public List<AddressEntity> findAll();
+    List<AddressEntity> findAll();
+
+    List<String> getSignsList();
 }

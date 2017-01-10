@@ -9,6 +9,7 @@ import com.app.registration.model.dto.PersonDto;
 import com.app.registration.repository.AddressRepository;
 import com.app.registration.repository.CriteriaFilter.PersonCriteriaFilter;
 import com.app.registration.repository.PersonRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -48,8 +49,10 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public AddressDto createAddress(AddressRequest addressRequest) {
         AddressDto addressDto = new AddressDto();
+        AddressEntity addressEntity = convertAddressRequestToEntity(addressRequest);
+        addressEntity.setSigns(StringUtils.substring(addressEntity.getCity(), 0, 2).toUpperCase());
         addressDto.setId(addressRepository.
-                create(convertAddressRequestToEntity(addressRequest)).
+                create(addressEntity).
                 getId());
 
         return addressDto;
@@ -88,8 +91,8 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public String getCityPersonByPesel(String pesel) {
-        return personRepository.findByPesel(pesel).getAddress().getCity();
+    public String getSignPersonByPesel(String pesel) {
+        return personRepository.findByPesel(pesel).getAddress().getSigns();
     }
 
     @Override
@@ -104,6 +107,11 @@ public class PersonServiceImpl implements PersonService {
         AddressDto addressDto = new AddressDto();
         addressDto.setId(addressRepository.update(convertAddressRequestToEntity(addressRequest)).getId());
         return addressDto;
+    }
+
+    @Override
+    public List<String> getSignsList() {
+        return addressRepository.getSignsList();
     }
 
     private PersonEntity convertPersonRequestToEntity(PersonRequest personRequest){

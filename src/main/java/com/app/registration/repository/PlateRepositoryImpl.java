@@ -8,6 +8,7 @@ import com.app.registration.repository.CriteriaFilter.DocumentTypeCriteriaFilter
 import com.app.registration.repository.CriteriaFilter.PlateCriteriaFilter;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -35,6 +36,14 @@ public class PlateRepositoryImpl extends AbstractGenericRepositoryWithSession<Pl
         Criteria plateCriteria = getSession().createCriteria(PlateEntity.class);
         plateCriteria.add(Restrictions.eq("plateNumber", plateNumber));
         return (PlateEntity) plateCriteria.uniqueResult();
+    }
+
+    @Override
+    public Long getUnusedSignCount(String sign) {
+        Criteria plateCriteria = getSession().createCriteria(PlateEntity.class);
+        plateCriteria.add(Restrictions.eq("signs", sign));
+        plateCriteria.setProjection(Projections.rowCount());
+        return (Long) plateCriteria.uniqueResult();
     }
 
     @Override

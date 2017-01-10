@@ -9,7 +9,8 @@ import java.util.List;
  */
 public interface PlateService {
 
-    List<PlateDto> createByCount(String city, int count);
+    List<PlateDto> createByCount(String signs, Long count);
     List<PlateDto> findAll();
-    List<PlateDto> findUnusedByCity(int maxSize, String city);
+    List<PlateDto> findUnusedBySign(int maxSize, String sign);
+    Long getUnusedSignCount(String sign);
 }

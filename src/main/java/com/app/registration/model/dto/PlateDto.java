@@ -6,7 +6,7 @@ package com.app.registration.model.dto;
 public class PlateDto {
 
     private String plateNumber;
-    private String city;
+    private String signs;
     private boolean used;
 
     public String getPlateNumber() {
@@ -17,12 +17,12 @@ public class PlateDto {
         this.plateNumber = plateNumber;
     }
 
-    public String getCity() {
-        return city;
+    public String getSigns() {
+        return signs;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setSigns(String signs) {
+        this.signs = signs;
     }
 
     public boolean isUsed() {

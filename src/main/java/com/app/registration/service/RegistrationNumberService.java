@@ -5,6 +5,6 @@ package com.app.registration.service;
  */
 interface RegistrationNumberService {
 
-    String generatePlateNumber(String city);
+    String generatePlateNumber(String signs);
     String generateProofRegistrationNumber(boolean isTemporary);
 }

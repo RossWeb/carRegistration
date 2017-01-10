@@ -17,8 +17,8 @@ public class RegistrationNumberServiceImpl implements RegistrationNumberService 
     private static final char PROOF_TEMP_SIGN = 'T';
 
     @Override
-    public String generatePlateNumber(String city) {
-        return StringUtils.substring(city, 0, 2) + RandomStringUtils.randomNumeric(PLATE_NUM_SIZE);
+    public String generatePlateNumber(String signs) {
+        return signs + RandomStringUtils.randomNumeric(PLATE_NUM_SIZE);
     }
 
     @Override

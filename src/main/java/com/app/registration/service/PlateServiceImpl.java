@@ -4,7 +4,6 @@ import com.app.registration.model.PlateEntity;
 import com.app.registration.model.dto.PlateDto;
 import com.app.registration.repository.CriteriaFilter.PlateCriteriaFilter;
 import com.app.registration.repository.PlateRepository;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -35,13 +34,13 @@ public class PlateServiceImpl implements PlateService {
     }
 
     @Override
-    public List<PlateDto> createByCount(String city, int count) {
+    public List<PlateDto> createByCount(String signs, Long count) {
         List<PlateDto> plateDtos = new ArrayList<>();
         for (int i = 0; i < count ; i++) {
             PlateEntity plateEntity = new PlateEntity();
-            plateEntity.setCity(city);
+            plateEntity.setSigns(signs);
             plateEntity.setUsed(false);
-            plateEntity.setPlateNumber(registrationNumberService.generatePlateNumber(city));
+            plateEntity.setPlateNumber(registrationNumberService.generatePlateNumber(signs));
             plateDtos.add(convertEntityToDto(plateRepository.create(plateEntity)));
         }
         return plateDtos;
@@ -53,7 +52,7 @@ public class PlateServiceImpl implements PlateService {
     }
 
     @Override
-    public List<PlateDto> findUnusedByCity(int maxSize, String city) {
+    public List<PlateDto> findUnusedBySign(int maxSize, String city) {
         PlateCriteriaFilter plateCriteriaFilter = new PlateCriteriaFilter();
         plateCriteriaFilter.setCity(city);
         plateCriteriaFilter.setUsed(false);
@@ -61,9 +60,14 @@ public class PlateServiceImpl implements PlateService {
         return plateRepository.find(plateCriteriaFilter).stream().map(PlateServiceImpl::convertEntityToDto).collect(Collectors.toList());
     }
 
+    @Override
+    public Long getUnusedSignCount(String sign) {
+        return plateRepository.getUnusedSignCount(sign);
+    }
+
     private static PlateDto convertEntityToDto(PlateEntity plateEntity){
         PlateDto plateDto = new PlateDto();
-        plateDto.setCity(plateEntity.getCity());
+        plateDto.setSigns(plateEntity.getSigns());
         plateDto.setPlateNumber(plateEntity.getPlateNumber());
         plateDto.setUsed(plateEntity.isUsed());
         return plateDto;

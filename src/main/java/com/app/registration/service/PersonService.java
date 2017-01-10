@@ -20,7 +20,8 @@ public interface PersonService{
     List<PersonDto> getAllPersons();
     PersonDto findByPesel(String pesel);
     void removePersonByPesel(String pesel);
-    String getCityPersonByPesel(String pesel);
+    String getSignPersonByPesel(String pesel);
     PersonDto updatePerson(PersonRequest personRequest);
     AddressDto updateAddress(AddressRequest addressRequest);
+    List<String> getSignsList();
 }

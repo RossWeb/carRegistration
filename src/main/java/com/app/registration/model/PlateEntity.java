@@ -16,7 +16,7 @@ public class PlateEntity implements Serializable{
     private static final long serialVersionUID = 1L;
 
     private String plateNumber;
-    private String city;
+    private String signs;
     private boolean used;
 
     @Id
@@ -29,13 +29,13 @@ public class PlateEntity implements Serializable{
         this.plateNumber = plateNumber;
     }
 
-    @Column(name = "CITY", nullable = false)
-    public String getCity() {
-        return city;
+    @Column(name = "SIGNS", nullable = false)
+    public String getSigns() {
+        return signs;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setSigns(String signs) {
+        this.signs = signs;
     }
 
     @Column(name = "USED", nullable = false)

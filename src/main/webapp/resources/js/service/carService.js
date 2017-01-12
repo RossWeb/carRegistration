@@ -17,6 +17,11 @@ mainApp.service('carService', function($http, $q) {
         return deferredResult($q, result);
     };
 
+    this.updateCar = function(dataObj){
+        var result = $http.post('car/edit', dataObj);
+        return deferredResult($q, result);
+    };
+
     this.findCarByVin = function(dataObj){
         var result = $http.get('car/searchByVin/' + dataObj);
         return deferredResult($q, result);

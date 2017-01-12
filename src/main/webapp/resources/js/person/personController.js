@@ -113,6 +113,9 @@ mainApp.controller('personController', function($scope, $http, personService, ad
         getPersonList();
     });
 
+    $scope.$on('PERSON_SEARCH_EVENT', function(nameEven, pesel) {
+        $scope.selectPerson(pesel);
+    });
 
     $scope.createOtherOwner = function(){
         var response = createPerson();

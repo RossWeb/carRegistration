@@ -13,7 +13,7 @@
         <appender-ref ref="STDOUT" />
     </logger>
 
-    <logger name="com.app.registration" level="debug" additivity="false">
+    <logger name="com.app.registration" level="info" additivity="false">
         <appender-ref ref="STDOUT" />
     </logger>
 

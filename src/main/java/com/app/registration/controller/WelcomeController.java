@@ -117,7 +117,7 @@ public class WelcomeController {
         otherPersonList.add(personDto2.getPesel());
         insuranceAgreementDto.setOtherOwnerId(otherPersonList);
         insuranceRequest.setInsuranceAgreementDto(insuranceAgreementDto);
-        plateService.createByCount("Warszawa", 5L);
+        plateService.createByCount("WA", 5L);
         insuranceAgreementService.create(insuranceRequest);
         ProofRegistrationRequest proofRegistrationRequest = new ProofRegistrationRequest();
         ProofRegistrationDto proofRegistrationDto = new ProofRegistrationDto();

@@ -42,7 +42,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <div class="row">
-	                <ul id="navBar" class="nav navbar-nav">
+	                <ul id="navBar" ng-show="view.init" class="nav navbar-nav">
 	                    <li ng-class="{'active': nav.person}" >
 	                        <a href="#" ng-click="activeView(0)">Właściciel</a>
 	                        <!-- <a href="#" data-toggle="collapse" data-target="#listPersonExpander" aria-expanded="true" aria-controls="listPersonExpander">Właściciel <span class="sr-only">(current)</span></a> -->
@@ -69,36 +69,36 @@
 		                            Utwórz
 		                        </button>
 		                        <div class="form-group">
-		                            <input type="text" class="form-control" placeholder="Pesel">
+		                            <input type="text" ng-model="search.personPesel" class="form-control" placeholder="Pesel">
 		                        </div>
-		                        <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#searchUserExpander" aria-expanded="false" aria-controls="searchUserExpander">Szukaj</button>
+		                        <button ng-click="search(search.personPesel , 0)" type="button" class="btn btn-default" >Szukaj</button>
 		                    </div>
 		                    <div ng-show="nav.car" id="createCarTopMenu">
 		                        <button id="createCarButton" class="btn btn-default" type="button" ng-click="createView(1)">
 		                            Utwórz
 		                        </button>
 		                        <div class="form-group">
-		                            <input type="text" class="form-control" placeholder="Numer vin">
+		                            <input ng-model="search.car" type="text" class="form-control" placeholder="Numer vin">
 		                        </div>
-		                        <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#searchCarExpander" aria-expanded="false" aria-controls="searchCarExpander">Szukaj</button>
+		                        <button type="button" ng-click="search(search.car, 1)" class="btn btn-default" >Szukaj</button>
 		                    </div>
 		                    <div ng-show="nav.insurance" id="createInsuranceTopMenu">
 		                        <button id="createInsuranceButton" class="btn btn-default" type="button" ng-click="createView(2)">
 		                            Utwórz
 		                        </button>
 		                        <div class="form-group">
-		                            <input type="text" class="form-control" placeholder="Numer ubezpieczenia">
+		                            <input ng-model = "search.insurance" type="text" class="form-control" placeholder="Numer ubezpieczenia">
 		                        </div>
-		                        <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#searchInsuranceExpander" aria-expanded="false" aria-controls="searchInsuranceExpander">Szukaj</button>
+		                        <button type="button" ng-click="search(search.insurance, 2)" class="btn btn-default" >Szukaj</button>
 		                    </div>
 		                    <div ng-show="nav.registration" id="createRegistrationTopMenu">
 		                        <button id="createRegistrationButton" class="btn btn-default" type="button" ng-click="createView(3)">
 		                            Utwórz
 		                        </button>
 		                        <div class="form-group">
-		                            <input type="text" class="form-control" placeholder="Numer karty pojazdu">
+		                            <input ng-model="search.registration" type="text" class="form-control" placeholder="Numer karty pojazdu">
 		                        </div>
-		                        <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#searchRegistrationExpander" aria-expanded="false" aria-controls="searchRegistrationExpander">Szukaj</button>
+		                        <button type="button" ng-click="search(search.registration , 3)" class="btn btn-default" >Szukaj</button>
 		                    </div>
 		                </form>
                 	</div>
@@ -128,27 +128,6 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-	<div ng-controller = "addressController">
-		<div class="collapse" id="searchAddressExpander">
-		    <div class="card card-block">
-				<h3><span class="label label-default">Adres</span></h3>
-				<ul class="list-group">
-				    <li id="addressSearchCity" class="list-group-item">
-				        <span>Miasto</span>
-							<label>{{addressSearched.city}}</label>
-                    </li>
-				    <li id="addressSearchCity" class="list-group-item">
-				        <span>Ulica</span>
-						<label>{{addressSearched.street}}</label>
-                    </li>
-				    <li id="addressSearchCity" class="list-group-item">
-				        <span>Kod pocztowy</span>
-						<label>{{addressSearched.postCode}}</label>
-				    </li>
-				</ul>
-			</div>
-		</div>
-    </div>
 
     <%@ include file="/WEB-INF/views/pages/main.jsp" %>
     <%@ include file="/WEB-INF/views/pages/person/person.jsp" %>

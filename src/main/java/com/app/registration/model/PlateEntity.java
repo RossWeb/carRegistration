@@ -29,7 +29,7 @@ public class PlateEntity implements Serializable{
         this.plateNumber = plateNumber;
     }
 
-    @Column(name = "SIGNS", nullable = false)
+    @Column(name = "SIGNS", nullable = false, length = 2)
     public String getSigns() {
         return signs;
     }

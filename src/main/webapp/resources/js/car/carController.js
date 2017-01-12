@@ -30,11 +30,27 @@ mainApp.controller('carController', function($scope, $http, carService, personSe
         $scope.$emit('CAR_SET_EVENT', '');
     };
 
+
+    var fillCarScope = function(carData){
+        $scope.car = {};
+        $scope.car.edit = {};
+        $scope.car.name = carData.name;
+        $scope.car.vin = carData.vin;
+        $scope.car.productionDate = carData.productionDate;
+        $scope.car.ownerPesel = personService.getPersonId();
+    };
+
     $scope.$on('CAR_LIST_EVENT', function() {
         getCarList();
     });
 
+    $scope.$on('CAR_SEARCH_EVENT', function(nameEvent, vin) {
+        $scope.selectCar(vin)
+    });
 
+    $scope.editCar = function(){
+        $scope.car.edit.visible = true;
+    };
 
     $scope.removeCar = function(vin){
        carService.removeCar(vin)
@@ -49,7 +65,9 @@ mainApp.controller('carController', function($scope, $http, carService, personSe
     $scope.selectCar = function(vin){
         carService.findCarByVin(vin)
         .then(function (response) {
+            fillCarScope(response.carDto);
             setCar(response);
+
         })
         .catch(function (response) {
             alert( "failure message: " + JSON.stringify({data: response}));
@@ -70,6 +88,25 @@ mainApp.controller('carController', function($scope, $http, carService, personSe
         then(function (response) {
             setCar(response);
             resetForm();
+        })
+        .catch(function (response) {
+            alert( "failure message: " + JSON.stringify({data: response}));
+        });
+    };
+
+    $scope.updateCar = function(){
+        var newCarData = {
+            carDto : {
+                name : $scope.car.name,
+                vin : $scope.car.vin,
+                productionDate : $scope.car.productionDate,
+                ownerPesel : $scope.car.ownerPesel
+            }
+        };
+
+        carService.updateCar(newCarData).
+        then(function (response) {
+            $scope.car.edit.visible = false;
         })
         .catch(function (response) {
             alert( "failure message: " + JSON.stringify({data: response}));

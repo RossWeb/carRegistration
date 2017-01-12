@@ -21,22 +21,10 @@ public class CarEntity implements Serializable{
     public static final String FIND_BY_VIN = "CarEntity.findByVin";
     public static final String FIND_ALL = "CarEntity.findAll";
 
-    private Long id;
     private String name;
     private String vin;
     private Date productionDate;
     private PersonEntity owner;
-
-    @Id
-    @Column(name = "ID", nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -46,6 +34,8 @@ public class CarEntity implements Serializable{
         this.name = name;
     }
 
+    @Id
+    @Column(name = "VIN", nullable = false)
     public String getVin() {
         return vin;
     }

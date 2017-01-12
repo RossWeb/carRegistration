@@ -32,11 +32,25 @@ mainApp.controller('insuranceController', function($scope, $http, insuranceServi
         $scope.$emit('INSURANCE_SET_EVENT', '');
     };
 
+    var fillInsuranceScope = function(insuranceData){
+        $scope.insurance = {};
+        $scope.insurance.edit = {};
+        $scope.insurance.insuranceNumber = insuranceData.insuranceNumber;
+        $scope.insurance.purchaseDate = insuranceData.purchaseDate;
+        $scope.insurance.insuranceCompanyName = insuranceData.insuranceCompanyName;
+        $scope.insurance.owner = insuranceData.buyerPesel;
+        $scope.insurance.otherOwner = insuranceData.otherOwnerId;
+        $scope.insurance.car = insuranceData.carVin;
+
+    };
+
     $scope.$on('INSURANCE_LIST_EVENT', function() {
         getInsuranceList();
     });
 
-
+    $scope.$on('INSURANCE_SEARCH_EVENT', function(nameEvent, insuranceNumber) {
+        $scope.selectInsurance(insuranceNumber);
+    });
 
     $scope.addOtherOwner = function(){
         $scope.$on('OTHER_OWNER_CREATED', function(event, data) {
@@ -62,11 +76,16 @@ mainApp.controller('insuranceController', function($scope, $http, insuranceServi
     $scope.selectInsurance = function(insuranceNumber){
         insuranceService.findInsuranceByNumber(insuranceNumber)
         .then(function (response) {
+            fillInsuranceScope(response.insuranceAgreementList[0])
             setInsurance(response);
         })
         .catch(function (response) {
             alert( "failure message: " + JSON.stringify({data: response}));
         });
+    };
+
+     $scope.editInsurance = function(){
+        $scope.insurance.edit.visible = true;
     };
 
     $scope.createInsurance = function(){
@@ -85,6 +104,27 @@ mainApp.controller('insuranceController', function($scope, $http, insuranceServi
         then(function (response) {
             setInsurance(response);
             resetForm();
+        })
+        .catch(function (response) {
+            alert( "failure message: " + JSON.stringify({data: response}));
+        });
+    };
+
+    $scope.updateInsurance = function(){
+        var newInsuranceData = {
+            insuranceDto : {
+                insuranceNumber : $scope.insurance.insuranceNumber,
+                purchaseDate : $scope.insurance.purchaseDate,
+                insuranceCompanyName : $scope.insurance.insuranceCompanyName,
+                buyer : $scope.insurance.owner,
+                otherOwner : $scope.insurance.otherOwner,
+                car : $scope.insurance.car
+            }
+        };
+
+        insuranceService.updateInsurance(newInsuranceData).
+        then(function (response) {
+            $scope.insurance.edit.visible = false;
         })
         .catch(function (response) {
             alert( "failure message: " + JSON.stringify({data: response}));

@@ -17,7 +17,11 @@ var viewData = [
 		},
 		edit : {
 			selector : $("#editPersonExpander")
-		}
+		},
+        search : {
+            selector : $("#editPersonExpander"),
+            event : 'PERSON_SEARCH_EVENT'
+        }
 	},
 	car = {
 		step : 1,
@@ -28,7 +32,14 @@ var viewData = [
 		},
 		create :  {
 			selector : $("#createCarExpander")
-		}
+		},
+		edit : {
+            selector : $("#editCarExpander")
+        },
+        search : {
+            selector : $("#editCarExpander"),
+            event : 'CAR_SEARCH_EVENT'
+        }
 	},
 	insurance = {
 		step : 2,
@@ -39,7 +50,14 @@ var viewData = [
 		},
 		create :  {
 			selector : $("#createInsuranceExpander")
-		}
+		},
+        edit : {
+             selector : $("#editInsuranceExpander")
+        },
+        search : {
+            selector : $("#editInsuranceExpander"),
+            event : 'INSURANCE_SEARCH_EVENT'
+        }
 	},
 	registration = {
 		step : 3,
@@ -67,6 +85,7 @@ var expanderShowBySelector = function(elementNumber, type){
 var initView = function(){
 	$scope.nav = {};
 	$scope.view = {};
+	$scope.view.init = {};
 	$scope.view.ownerId = 'Brak';
 	$scope.view.carId = 'Brak';
 	$scope.view.insuranceId = 'Brak';
@@ -100,11 +119,13 @@ $scope.$on('PERSON_SET_EVENT', function() {
 
 $scope.$on('CAR_SET_EVENT', function() {
     $scope.view.carId = carService.getCarId();
+    expanderShowBySelector(1, 'edit');
     currentStep = 2;
 });
 
 $scope.$on('INSURANCE_SET_EVENT', function() {
     $scope.view.insuranceId = insuranceService.getInsuranceId();
+    expanderShowBySelector(2, 'edit');
     currentStep = 3;
 });
 
@@ -121,6 +142,11 @@ $scope.createView = function(elementNumber){
 			$scope.$broadcast(viewData[3]['create'].event, '');
 		}
 	}
+};
+
+$scope.search = function(data, step){
+    $scope.$broadcast(viewData[step]['search'].event, data);
+    expanderShowBySelector(step, 'edit');
 };
 
 initView();

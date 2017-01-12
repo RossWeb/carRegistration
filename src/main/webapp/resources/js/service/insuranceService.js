@@ -26,6 +26,11 @@ mainApp.service('insuranceService', function($http, $q) {
         return deferredResult($q, result);
     };
 
+    this.updateInsurance = function(dataObj){
+        var result = $http.post('insurance/edit', dataObj);
+        return deferredResult($q, result);
+    };
+
     this.findInsuranceByNumber = function(number){
         var dataObj = getInsuranceObject(number);
         var result = $http.post('insurance/search' , dataObj);

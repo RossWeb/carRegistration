@@ -18,7 +18,7 @@ mainApp.service('insuranceService', function($http, $q) {
     };
 
     this.addOtherOwnerId = function(otherOwnerId){
-        insurance.otherOwnersId.push(otherOwnerId);
+        insurance.otherOwnersId = otherOwnerId;
     };
 
     this.saveInsurance = function(dataObj){

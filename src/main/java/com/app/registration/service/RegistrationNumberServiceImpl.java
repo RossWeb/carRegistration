@@ -31,6 +31,6 @@ public class RegistrationNumberServiceImpl implements RegistrationNumberService 
                 proofRegistrationNumber = RandomStringUtils.randomAlphanumeric(PROOF_NUM_SIZE);
             }
         }
-        return proofRegistrationNumber;
+        return proofRegistrationNumber.toUpperCase();
     }
 }

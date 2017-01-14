@@ -42,12 +42,12 @@ public class GeneratePlatesJob {
 
     public void execute(){
         LOG.info("Execute generate plates job");
-        //todo dodac batch oraz operation lock
+        //todo operation lock
         long minPlatesNumber = getMinPlatesNumberFromProperty();
         int batchSize = environment.getProperty(PLATES_JOB_BATCH_SIZE, Integer.class, 10);
         Map<Long, String> platesMap = plateService.getUnusedSignCount(minPlatesNumber, batchSize);
         platesMap.forEach((plateNumber, sign) -> {
-            LOG.info("Plates "+ plateNumber + " is less then minimal count - generate");
+            LOG.info("Plates "+ sign + " is less then minimal count - generate");
             plateService.createByCount(sign, minPlatesNumber - plateNumber);
         });
     }

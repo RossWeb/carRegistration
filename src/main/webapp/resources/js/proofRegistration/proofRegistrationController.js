@@ -35,8 +35,8 @@ mainApp.controller('proofRegistrationController', function($scope, $http, proofR
         });
     };
 
-    var setProofRegistration = function(response){
-        proofRegistrationService.setProofRegistrationId(response.proofRegistrationDto.numberCardVehicle);
+    var setProofRegistration = function(numberCardVehicle){
+        proofRegistrationService.setProofRegistrationId(numberCardVehicle);
     };
 
     var createProofRegistrationLoadTemplate = function (){
@@ -80,7 +80,7 @@ mainApp.controller('proofRegistrationController', function($scope, $http, proofR
     $scope.selectRegistration = function(numberCardVehicle){
         proofRegistrationService.findRegistrationByNumber(numberCardVehicle)
         .then(function (response) {
-            setProofRegistration(response);
+            setProofRegistration(numberCardVehicle);
         })
         .catch(function (response) {
             alert( "failure message: " + JSON.stringify({data: response}));
@@ -89,13 +89,13 @@ mainApp.controller('proofRegistrationController', function($scope, $http, proofR
 
     $scope.createRegistration = function(){
         var newRegistrationData = {
-            registrationDto : {
-                isTemporaryProof : $scope.proofRegistration.isTemporaryProof,
+            proofRegistrationDto : {
+                temporaryProof : $scope.proofRegistration.isTemporaryProof,
                 numberCardVehicle : $scope.proofRegistration.numberCardVehicle,
                 plateNumber : $scope.proofRegistration.plateNumber,
                 firstRegistrationDate : $scope.proofRegistration.firstRegistrationDate,
                 mainOwnerPesel : personService.getPersonId(),
-                otherOwnerPesels : insuranceService.getOtherOwners(),
+                otherOwnerPesels : insuranceService.getOtherOwnersId(),
                 registrationDate : $scope.proofRegistration.registrationDate,
                 carVin : carService.getCarId()
             }
@@ -103,7 +103,9 @@ mainApp.controller('proofRegistrationController', function($scope, $http, proofR
 
         proofRegistrationService.saveRegistration(newRegistrationData).
         then(function (response) {
-            setProofRegistration(response);
+            setProofRegistration(response.proofRegistrationDto.numberCardVehicle);
+            getRegistrationList();
+            $scope.$emit('REGISTRATION_CREATED_EVENT', '');
             resetForm();
         })
         .catch(function (response) {

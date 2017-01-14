@@ -1,9 +1,5 @@
 package com.app.registration.model.dto;
 
-import com.app.registration.model.CarEntity;
-import com.app.registration.model.PersonEntity;
-import com.app.registration.model.PlateEntity;
-
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +16,7 @@ public class ProofRegistrationDto {
     private Date registrationDate;
     private Date registrationValidDate;
     private String carVin;
-    private boolean isTemporaryProof;
+    private boolean temporaryProof;
 
     public String getNumberCardVehicle() {
         return numberCardVehicle;
@@ -87,10 +83,10 @@ public class ProofRegistrationDto {
     }
 
     public boolean isTemporaryProof() {
-        return isTemporaryProof;
+        return temporaryProof;
     }
 
     public void setTemporaryProof(boolean temporaryProof) {
-        isTemporaryProof = temporaryProof;
+        this.temporaryProof = temporaryProof;
     }
 }

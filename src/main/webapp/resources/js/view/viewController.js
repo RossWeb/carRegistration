@@ -130,6 +130,11 @@ $scope.$on('INSURANCE_SET_EVENT', function() {
     currentStep = 3;
 });
 
+$scope.$on('REGISTRATION_CREATED_EVENT', function() {
+    expanderShowBySelector(3, 'list');
+});
+
+
 $scope.activeView = function(stepFromView){
 	$scope.$broadcast(viewData[stepFromView]['list'].event, '');
 	setActiveNav(stepFromView);

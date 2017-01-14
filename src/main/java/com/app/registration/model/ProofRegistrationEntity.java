@@ -67,7 +67,7 @@ public class ProofRegistrationEntity implements Serializable{
         this.registrationValidDate = registrationValidDate;
     }
 
-    @OneToOne
+    @ManyToOne
     public PersonEntity getMainOwner() {
         return mainOwner;
     }
@@ -76,7 +76,8 @@ public class ProofRegistrationEntity implements Serializable{
         this.mainOwner = mainOwner;
     }
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "otherOwner_id")
     public List<PersonEntity> getOtherOwner() {
         return otherOwner;
     }

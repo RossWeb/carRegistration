@@ -35,7 +35,7 @@
                                 <td>{{proofRegistration.carVin}}</td>
                                 <td>{{proofRegistration.temporaryProof}}</td>
                                 <td>
-                                    <button type="button" class="btn btn-success" ng-click="selectProofRegistration(proofRegistration.numberCardVehicle)">Wybierz</button>
+                                    <button type="button" class="btn btn-success" ng-click="finalizeProofRegistration(proofRegistration.numberCardVehicle)">Wymień</button>
                                     <button type="button" class="btn btn-danger" ng-click="removeProofRegistration(proofRegistration.numberCardVehicle)">Usuń</button>
                                 </td>
                             </tr>
@@ -62,7 +62,7 @@
                             <select id="plateNumberForm" ng-model = "proofRegistration.plateNumber" type="text" class="form-control" placeholder="XXXXXXX" aria-describedby="plateNumber-addon">
                                 <option ng-repeat="plateNumber in proofRegistration.plateNumbers" value="{{plateNumber}}">{{plateNumber}}</option>
                             </select>
-                            <button type="button" ng-click="randomNextPlate()" class="btn btn-info pull-right">Losuj</button>
+                            <button type="button" ng-click="randomNextPlate()" class="hide btn btn-info pull-right">Losuj</button>
                         </div>
                         <div class='input-group date'>
                             <span class="input-group-addon" id="firstRegistrationDate-addon">Data pierwszej rejestracji</span>

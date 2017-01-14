@@ -95,10 +95,10 @@
 		                        <button id="createRegistrationButton" class="btn btn-default" type="button" ng-click="createView(3)">
 		                            Utwórz
 		                        </button>
-		                        <div class="form-group hi">
+		                        <div class="form-group hide">
 		                            <input ng-model="search.registration" type="text" class="form-control" placeholder="Numer karty pojazdu">
 		                        </div>
-		                        <button type="button" ng-click="search(search.registration , 3)" class="btn btn-default" >Szukaj</button>
+		                        <button type="button" ng-click="search(search.registration , 3)" class="btn btn-default hide" >Szukaj</button>
 		                    </div>
 		                </form>
                 	</div>

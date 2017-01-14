@@ -132,5 +132,6 @@ public class WelcomeController {
         proofRegistrationDto.setTemporaryProof(true);
         proofRegistrationRequest.setProofRegistrationDto(proofRegistrationDto);
         proofRegistrationService.createProofRegistration(proofRegistrationRequest);
+        plateService.changePlateStatus(proofRegistrationDto.getPlateNumber());
     }
 }

@@ -15,4 +15,5 @@ public interface PlateService {
     List<PlateDto> findAll();
     List<PlateDto> findUnusedBySign(int maxSize, String sign);
     Map<Long, String> getUnusedSignCount(long minCountValue, int batchSize);
+    void changePlateStatus(String plateNumber);
 }

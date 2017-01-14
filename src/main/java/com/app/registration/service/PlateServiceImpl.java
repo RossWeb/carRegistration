@@ -78,6 +78,11 @@ public class PlateServiceImpl implements PlateService {
         return plateMap;
     }
 
+    @Override
+    public void changePlateStatus(String plateNumber) {
+        plateRepository.changePlateStatus(plateNumber);
+    }
+
     private static PlateDto convertEntityToDto(PlateEntity plateEntity){
         PlateDto plateDto = new PlateDto();
         plateDto.setSigns(plateEntity.getSigns());

@@ -21,7 +21,6 @@ public class PlateRepositoryImpl extends AbstractGenericRepositoryWithSession<Pl
         Criteria plateCriteria = getSession().createCriteria(PlateEntity.class);
         plateCriteria.add(Restrictions.disjunction(
                 Restrictions.eq("used", plateCriteriaFilter.isUsed()),
-                Restrictions.like("signs",plateCriteriaFilter.getSign(), MatchMode.ANYWHERE),
                 Restrictions.like("plateNumber",plateCriteriaFilter.getPlateNumber(), MatchMode.ANYWHERE)));
         plateCriteria.setMaxResults(plateCriteriaFilter.getMaxResults());
         return plateCriteria.list();
@@ -53,5 +52,12 @@ public class PlateRepositoryImpl extends AbstractGenericRepositoryWithSession<Pl
         Criteria plateCriteria = getSession().createCriteria(PlateEntity.class);
         plateCriteria.add(Restrictions.eq("signs", sign));
         return !plateCriteria.list().isEmpty();
+    }
+
+    @Override
+    public void changePlateStatus(String plateNumber) {
+        PlateEntity plateEntity = findByPlateNumber(plateNumber);
+        plateEntity.setUsed(!plateEntity.isUsed());
+        update(plateEntity);
     }
 }

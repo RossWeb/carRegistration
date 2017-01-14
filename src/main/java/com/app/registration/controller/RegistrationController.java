@@ -56,6 +56,7 @@ public class RegistrationController {
     public ProofRegistrationResponse newRegistration(@RequestBody ProofRegistrationRequest proofRegistrationRequest) {
         ProofRegistrationResponse proofRegistrationResponse = new ProofRegistrationResponse();
         proofRegistrationResponse.setProofRegistrationDto(proofRegistrationService.createProofRegistration(proofRegistrationRequest));
+        plateService.changePlateStatus(proofRegistrationRequest.getProofRegistrationDto().getPlateNumber());
         return proofRegistrationResponse;
     }
 

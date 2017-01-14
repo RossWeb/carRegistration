@@ -52,9 +52,9 @@ mainApp.controller('personController', function($scope, $http, personService, ad
     var updatePerson = function(){
         var newAddressData = {
             addressDto : {
-                  city : $scope.address.city,
-                  street : $scope.address.street,
-                  postCode : $scope.address.postCode
+                  city : $scope.address.edit.city,
+                  street : $scope.address.edit.street,
+                  postCode : $scope.address.edit.postCode
             }
         };
 

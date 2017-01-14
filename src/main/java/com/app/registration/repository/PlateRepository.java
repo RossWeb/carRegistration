@@ -20,4 +20,5 @@ public interface PlateRepository extends GenericRepository<PlateEntity> {
     List<Object[]> getUnusedSignCount(long minCountValue, int batchSize);
     List<PlateEntity> findAll();
     boolean isExistedBySign(String sign);
+    void changePlateStatus(String plateNumber);
 }

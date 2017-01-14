@@ -77,7 +77,7 @@ public class ProofRegistrationEntity implements Serializable{
     }
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "otherOwner_id")
+    @JoinColumn(name = "proofRegistration_id")
     public List<PersonEntity> getOtherOwner() {
         return otherOwner;
     }

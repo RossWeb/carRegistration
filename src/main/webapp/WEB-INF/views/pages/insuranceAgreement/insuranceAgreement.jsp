@@ -58,7 +58,7 @@
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon" id="insuranceOtherOwner-addon">Współwłaściciele</span>
-                            <input ng-model = "insurance.otherOwners" type="text" class="form-control" disabled="true" placeholder="XXXXXXXX" aria-describedby="insuranceOtherOwner-addon">
+                            <input ng-model = "insurance.otherOwners" type="text" class="form-control" disabled="true" placeholder="Brak" aria-describedby="insuranceOtherOwner-addon">
                             <button type="button" ng-click="addOtherOwner()" class="btn btn-info pull-right">Dodaj</button>
                         </div>
                         <div class="collapse" id="createOtherOwnerExpander" ng-controller = "personController">
@@ -118,30 +118,30 @@
                         <h3><span class="label label-default">Ubezpieczenie</span></h3>
                         <div class="input-group">
                             <span class="input-group-addon" id="insuranceNumber-addon">Numer ubezpieczenia</span>
-                            <input ng-model = "insurance.insuranceNumber" ng-disabled=true type="text" class="form-control" placeholder="XXXXXXXXX" aria-describedby="insuranceNumber-addon">
+                            <input ng-model = "insurance.edit.insuranceNumber" ng-disabled=true type="text" class="form-control" placeholder="XXXXXXXXX" aria-describedby="insuranceNumber-addon">
                         </div>
                         <div class='input-group date'>
                             <span class="input-group-addon" id="insurancePurchaseDate-addon">Data zakupu</span>
-                            <input ng-model = "insurance.purchaseDate" ng-disabled="!insurance.edit.visible" type="text" class="form-control" placeholder="XXXX-XX-XX" aria-describedby="insurancePurchaseDate-addon">
+                            <input ng-model = "insurance.edit.purchaseDate" ng-disabled="!insurance.edit.visible" type="text" class="form-control" placeholder="XXXX-XX-XX" aria-describedby="insurancePurchaseDate-addon">
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon" id="insuranceCompanyName-addon">Nazwa ubezpieczyciela</span>
-                            <input ng-model = "insurance.insuranceCompanyName" ng-disabled="!insurance.edit.visible" type="text" class="form-control" placeholder="CompanyName" aria-describedby="insuranceCompanyName-addon">
+                            <input ng-model = "insurance.edit.insuranceCompanyName" ng-disabled="!insurance.edit.visible" type="text" class="form-control" placeholder="CompanyName" aria-describedby="insuranceCompanyName-addon">
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon" id="insuranceOwner-addon">Właściciel</span>
-                            <input ng-model = "insurance.owner" type="text" ng-disabled=true class="form-control" placeholder="Owner" aria-describedby="insuranceOwner-addon">
+                            <input ng-model = "insurance.edit.owner" type="text" ng-disabled=true class="form-control" placeholder="Owner" aria-describedby="insuranceOwner-addon">
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon" id="insuranceOtherOwner-addon">Współwłaściciele</span>
-                            <input type="text" ng-model = "insurance.otherOwners" ng-disabled=true class="form-control" disabled="true" placeholder="XXXXXXXX" aria-describedby="insuranceOtherOwner-addon">
+                            <input type="text" ng-model = "insurance.edit.otherOwners" ng-disabled=true class="form-control" disabled="true" placeholder="Brak" aria-describedby="insuranceOtherOwner-addon">
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon" id="insuranceCar-addon">Samochód</span>
-                            <input ng-model = "insurance.car" type="text" ng-disabled=true class="form-control" placeholder="Car" aria-describedby="insuranceCar-addon">
+                            <input ng-model = "insurance.edit.car" type="text" ng-disabled=true class="form-control" placeholder="Car" aria-describedby="insuranceCar-addon">
                         </div>
                         <button type="button" ng-hide="insurance.edit.visible" ng-click="editInsurance()" class="btn btn-primary pull-right">Edytuj</button>
                         <button type="button" ng-show="insurance.edit.visible" ng-click="updateInsurance()" class="btn btn-primary pull-right">Zapisz</button>

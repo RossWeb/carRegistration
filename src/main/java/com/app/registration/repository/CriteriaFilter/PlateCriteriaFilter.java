@@ -1,7 +1,6 @@
 package com.app.registration.repository.CriteriaFilter;
 
 import com.app.registration.model.CarEntity;
-import com.app.registration.model.PersonEntity;
 
 /**
  * Created by konrad on 12.11.16.
@@ -10,7 +9,7 @@ public class PlateCriteriaFilter {
 
     private String plateNumber;
     private CarEntity car;
-    private String city;
+    private String sign;
     private boolean used;
     private int maxResults;
 
@@ -38,12 +37,12 @@ public class PlateCriteriaFilter {
         this.car = car;
     }
 
-    public String getCity() {
-        return city;
+    public String getSign() {
+        return sign;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setSign(String sign) {
+        this.sign = sign;
     }
 
     public boolean isUsed() {

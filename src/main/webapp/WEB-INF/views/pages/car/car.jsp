@@ -62,19 +62,19 @@
                         <h3><span class="label label-default">Samochód</span></h3>
                         <div class="input-group">
                             <span class="input-group-addon" id="carName-addon">Nazwa</span>
-                            <input ng-model = "car.name" ng-disabled="!car.edit.visible" type="text" class="form-control" placeholder="Nazwa" aria-describedby="carName-addon">
+                            <input ng-model = "car.edit.name" ng-disabled="!car.edit.visible" type="text" class="form-control" placeholder="Nazwa" aria-describedby="carName-addon">
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon" id="carVin-addon">Vin</span>
-                            <input ng-model = "car.vin" ng-disabled="!car.edit.visible" type="text" class="form-control" placeholder="XXXXXXXX" aria-describedby="carVin-addon">
+                            <input ng-model = "car.edit.vin" ng-disabled="!car.edit.visible" type="text" class="form-control" placeholder="XXXXXXXX" aria-describedby="carVin-addon">
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon" id="carOwnerId-addon">Właściciel</span>
-                            <input ng-model = "car.ownerPesel" ng-disabled=true type="text" class="form-control" placeholder="XXXXXXXX" aria-describedby="carOwnerPesel-addon">
+                            <input ng-model = "car.edit.ownerPesel" ng-disabled=true type="text" class="form-control" placeholder="XXXXXXXX" aria-describedby="carOwnerPesel-addon">
                         </div>
                         <div class='input-group date'>
                             <span class="input-group-addon" id="carProductionDate-addon">Data produkcji</span>
-                            <input id="carProductionDateForm" ng-disabled="!car.edit.visible" ng-model = "car.productionDate" type="text" class="form-control" placeholder="XXXX-XX-XX" aria-describedby="carProductionDate-addon">
+                            <input id="carProductionDateForm" ng-disabled="!car.edit.visible" ng-model = "car.edit.productionDate" type="text" class="form-control" placeholder="XXXX-XX-XX" aria-describedby="carProductionDate-addon">
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>

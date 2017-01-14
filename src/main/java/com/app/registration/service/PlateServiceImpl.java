@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -47,22 +49,33 @@ public class PlateServiceImpl implements PlateService {
     }
 
     @Override
+    public void createIfNeeded(String signs, Long count) {
+        if(plateRepository.isExistedBySign(signs)){
+            createByCount(signs, count);
+        }
+    }
+
+    @Override
     public List<PlateDto> findAll() {
         return plateRepository.findAll().stream().map(PlateServiceImpl::convertEntityToDto).collect(Collectors.toList());
     }
 
     @Override
-    public List<PlateDto> findUnusedBySign(int maxSize, String city) {
+    public List<PlateDto> findUnusedBySign(int maxSize, String sign) {
         PlateCriteriaFilter plateCriteriaFilter = new PlateCriteriaFilter();
-        plateCriteriaFilter.setCity(city);
+        plateCriteriaFilter.setSign(sign);
         plateCriteriaFilter.setUsed(false);
         plateCriteriaFilter.setMaxResults(maxSize);
         return plateRepository.find(plateCriteriaFilter).stream().map(PlateServiceImpl::convertEntityToDto).collect(Collectors.toList());
     }
 
     @Override
-    public Long getUnusedSignCount(String sign) {
-        return plateRepository.getUnusedSignCount(sign);
+    public Map<Long, String> getUnusedSignCount(long minCountValue, int batchSize) {
+        Map<Long, String> plateMap = new HashMap<>();
+        plateRepository.getUnusedSignCount(minCountValue, batchSize).forEach(o -> {
+            plateMap.put((Long)o[0], (String)o[1]);
+        });
+        return plateMap;
     }
 
     private static PlateDto convertEntityToDto(PlateEntity plateEntity){

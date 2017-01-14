@@ -34,10 +34,10 @@ mainApp.controller('carController', function($scope, $http, carService, personSe
     var fillCarScope = function(carData){
         $scope.car = {};
         $scope.car.edit = {};
-        $scope.car.name = carData.name;
-        $scope.car.vin = carData.vin;
-        $scope.car.productionDate = carData.productionDate;
-        $scope.car.ownerPesel = personService.getPersonId();
+        $scope.car.edit.name = carData.name;
+        $scope.car.edit.vin = carData.vin;
+        $scope.car.edit.productionDate = carData.productionDate;
+        $scope.car.edit.ownerPesel = personService.getPersonId();
     };
 
     $scope.$on('CAR_LIST_EVENT', function() {
@@ -87,6 +87,7 @@ mainApp.controller('carController', function($scope, $http, carService, personSe
         carService.saveCar(newCarData).
         then(function (response) {
             setCar(response);
+            fillCarScope($scope.car);
             resetForm();
         })
         .catch(function (response) {

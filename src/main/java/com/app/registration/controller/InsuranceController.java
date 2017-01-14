@@ -29,7 +29,7 @@ public class InsuranceController {
     public InsuranceResponse newInsurance(@RequestBody InsuranceRequest insuranceRequest) {
         InsuranceResponse insuranceResponse = new InsuranceResponse();
         insuranceResponse.setInsuranceAgreement(insuranceAgreementService.create(insuranceRequest));
-        return new InsuranceResponse();
+        return insuranceResponse;
     }
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)

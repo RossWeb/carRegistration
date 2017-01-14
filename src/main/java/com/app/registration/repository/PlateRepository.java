@@ -17,6 +17,7 @@ public interface PlateRepository extends GenericRepository<PlateEntity> {
     List<PlateEntity> find(PlateCriteriaFilter plateCriteriaFilter);
 
     PlateEntity findByPlateNumber(String plateNumber);
-    Long getUnusedSignCount(String sign);
+    List<Object[]> getUnusedSignCount(long minCountValue, int batchSize);
     List<PlateEntity> findAll();
+    boolean isExistedBySign(String sign);
 }

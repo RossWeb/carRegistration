@@ -10,6 +10,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by konrad on 10.01.17.
@@ -18,7 +19,8 @@ import java.util.List;
 public class GeneratePlatesJob {
 
     private static final Logger LOG = LoggerFactory.logger(GeneratePlatesJob.class);
-    private static final String MIN_PLATES_NUMBER = "min.plates.number";
+    public static final String MIN_PLATES_NUMBER = "min.plates.number";
+    private static final String PLATES_JOB_BATCH_SIZE = "plates.job.batch.size";
     private PlateService plateService;
     private PersonService personService;
     private Environment environment;
@@ -40,17 +42,13 @@ public class GeneratePlatesJob {
 
     public void execute(){
         LOG.info("Execute generate plates job");
-        //todo dodac batch
-        List<String> signsList = personService.getSignsList();
-        Long minPlatesNumber = getMinPlatesNumberFromProperty();
-        signsList.forEach(s -> {
-            Long signCount = plateService.getUnusedSignCount(s);
-            if (signCount < minPlatesNumber) {
-                LOG.info("Plates "+ s + " is less then minimal count - generate");
-                plateService.createByCount(s, minPlatesNumber - signCount);
-            }else{
-                LOG.info("Plates "+ s +" is max count in database");
-            }
+        //todo dodac batch oraz operation lock
+        long minPlatesNumber = getMinPlatesNumberFromProperty();
+        int batchSize = environment.getProperty(PLATES_JOB_BATCH_SIZE, Integer.class, 10);
+        Map<Long, String> platesMap = plateService.getUnusedSignCount(minPlatesNumber, batchSize);
+        platesMap.forEach((plateNumber, sign) -> {
+            LOG.info("Plates "+ plateNumber + " is less then minimal count - generate");
+            plateService.createByCount(sign, minPlatesNumber - plateNumber);
         });
     }
 

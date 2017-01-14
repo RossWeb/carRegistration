@@ -83,6 +83,7 @@ var expanderShowBySelector = function(elementNumber, type){
 };
 
 var initView = function(){
+    $("#topMenu").removeClass('hide');
 	$scope.nav = {};
 	$scope.view = {};
 	$scope.view.init = {};
@@ -138,7 +139,7 @@ $scope.activeView = function(stepFromView){
 $scope.createView = function(elementNumber){
 	if(elementNumber <= currentStep){
 		expanderShowBySelector(elementNumber, 'create');
-		if(currentStep === 3){
+		if(elementNumber === 3){
 			$scope.$broadcast(viewData[3]['create'].event, '');
 		}
 	}

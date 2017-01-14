@@ -10,9 +10,11 @@ import java.io.Serializable;
 @Entity
 @Table(name = "PLATES")
 @NamedQueries({
+        @NamedQuery(name = PlateEntity.GET_UNUSED_LESS_BY_COUNT, query = "select count(*), p.signs from PlateEntity p where p.used = false group by p.signs having count(*) < :minCountValue")
 })
 public class PlateEntity implements Serializable{
 
+    public static final String GET_UNUSED_LESS_BY_COUNT = "PlateEntity.findByCountGroupBy";
     private static final long serialVersionUID = 1L;
 
     private String plateNumber;

@@ -26,21 +26,21 @@ mainApp.controller('insuranceController', function($scope, $http, insuranceServi
         });
     };
 
-    var setInsurance = function(response){
-        insuranceService.setInsuranceId(response.insuranceAgreementList[0].insuranceNumber);
-        insuranceService.addOtherOwnerId(response.insuranceAgreementList[0].otherOwnerId);
+    var setInsurance = function(insuranceAgreement){
+        insuranceService.setInsuranceId(insuranceAgreement.insuranceNumber);
+        insuranceService.addOtherOwnerId(insuranceAgreement.otherOwnerId);
         $scope.$emit('INSURANCE_SET_EVENT', '');
     };
 
     var fillInsuranceScope = function(insuranceData){
         $scope.insurance = {};
         $scope.insurance.edit = {};
-        $scope.insurance.insuranceNumber = insuranceData.insuranceNumber;
-        $scope.insurance.purchaseDate = insuranceData.purchaseDate;
-        $scope.insurance.insuranceCompanyName = insuranceData.insuranceCompanyName;
-        $scope.insurance.owner = insuranceData.buyerPesel;
-        $scope.insurance.otherOwner = insuranceData.otherOwnerId;
-        $scope.insurance.car = insuranceData.carVin;
+        $scope.insurance.edit.insuranceNumber = insuranceData.insuranceNumber;
+        $scope.insurance.edit.purchaseDate = insuranceData.purchaseDate;
+        $scope.insurance.edit.insuranceCompanyName = insuranceData.insuranceCompanyName;
+        $scope.insurance.edit.owner = insuranceData.buyerPesel;
+        $scope.insurance.edit.otherOwners = insuranceData.otherOwnerId;
+        $scope.insurance.edit.car = insuranceData.carVin;
 
     };
 
@@ -77,7 +77,7 @@ mainApp.controller('insuranceController', function($scope, $http, insuranceServi
         insuranceService.findInsuranceByNumber(insuranceNumber)
         .then(function (response) {
             fillInsuranceScope(response.insuranceAgreementList[0])
-            setInsurance(response);
+            setInsurance(response.insuranceAgreementList[0]);
         })
         .catch(function (response) {
             alert( "failure message: " + JSON.stringify({data: response}));
@@ -90,19 +90,20 @@ mainApp.controller('insuranceController', function($scope, $http, insuranceServi
 
     $scope.createInsurance = function(){
         var newInsuranceData = {
-            insuranceDto : {
+            insuranceAgreementDto : {
                 insuranceNumber : $scope.insurance.insuranceNumber,
                 purchaseDate : $scope.insurance.purchaseDate,
                 insuranceCompanyName : $scope.insurance.insuranceCompanyName,
-                buyer : personService.getPersonId(),
-                otherOwner : insuranceService.getOtherOwners(),
-                car : carService.getCarId()
+                buyerPesel : personService.getPersonId(),
+                otherOwnerId : insuranceService.getOtherOwnersId(),
+                carVin : carService.getCarId()
             }
         };
 
         insuranceService.saveInsurance(newInsuranceData).
         then(function (response) {
-            setInsurance(response);
+            setInsurance(response.insuranceAgreement);
+            fillInsuranceScope(response.insuranceAgreement);
             resetForm();
         })
         .catch(function (response) {

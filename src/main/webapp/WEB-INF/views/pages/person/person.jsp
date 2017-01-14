@@ -80,31 +80,31 @@
                         <h3><span class="label label-default">Właściciel</span></h3>
                         <div class="input-group">
                             <span class="input-group-addon" id="city-addon">Miasto</span>
-                            <input ng-model = "address.city" ng-disabled="!owner.edit.visible" type="text" class="form-control" placeholder="Miasto" aria-describedby="city-addon">
+                            <input ng-model = "address.edit.city" ng-disabled="!owner.edit.visible" type="text" class="form-control" placeholder="Miasto" aria-describedby="city-addon">
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon" id="street-addon">Ulica</span>
-                            <input ng-model = "address.street" ng-disabled="!owner.edit.visible" type="text" class="form-control" placeholder="Ulica z numerem" aria-describedby="street-addon">
+                            <input ng-model = "address.edit.street" ng-disabled="!owner.edit.visible" type="text" class="form-control" placeholder="Ulica z numerem" aria-describedby="street-addon">
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon" id="postcode-addon">Kod pocztowy</span>
-                            <input ng-model = "address.postCode" ng-disabled="!owner.edit.visible" type="text" class="form-control" placeholder="XX-XXX" aria-describedby="postcode-addon">
+                            <input ng-model = "address.edit.postCode" ng-disabled="!owner.edit.visible" type="text" class="form-control" placeholder="XX-XXX" aria-describedby="postcode-addon">
                         </div>
                         <div class="input-group">
                                 <span class="input-group-addon" id="pesel-addon">Pesel</span>
-                                <input ng-model = "owner.pesel" ng-disabled="true" type="text" class="form-control" placeholder="Pesel" aria-describedby="pesel-addon">
+                                <input ng-model = "owner.edit.pesel" ng-disabled="true" type="text" class="form-control" placeholder="Pesel" aria-describedby="pesel-addon">
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon" id="onwerName-addon">Imię</span>
-                                <input ng-model = "owner.name" ng-disabled="!owner.edit.visible" type="text" class="form-control" placeholder="Imię" aria-describedby="onwerName-addon">
+                                <input ng-model = "owner.edit.name" ng-disabled="!owner.edit.visible" type="text" class="form-control" placeholder="Imię" aria-describedby="onwerName-addon">
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon" id="ownerSurname-addon">Nazwisko</span>
-                                <input ng-model = "owner.surname" ng-disabled="!owner.edit.visible" type="text" class="form-control" placeholder="Nazwisko" aria-describedby="ownerSurname-addon">
+                                <input ng-model = "owner.edit.surname" ng-disabled="!owner.edit.visible" type="text" class="form-control" placeholder="Nazwisko" aria-describedby="ownerSurname-addon">
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon" id="ownerPhoneNumber-addon">Numer telefonu</span>
-                                <input ng-model = "owner.phoneNumber" ng-disabled="!owner.edit.visible" type="text" class="form-control" placeholder="XXXXXXXXX" aria-describedby="ownerPhoneNumber-addon">
+                                <input ng-model = "owner.edit.phoneNumber" ng-disabled="!owner.edit.visible" type="text" class="form-control" placeholder="XXXXXXXXX" aria-describedby="ownerPhoneNumber-addon">
                             </div>
                         <button type="button" ng-hide="owner.edit.visible" ng-click="editOwner()" class="btn btn-primary pull-right">Edytuj</button>
                         <button type="button" ng-show="owner.edit.visible" ng-click="updateOwner()" class="btn btn-primary pull-right">Zapisz</button>

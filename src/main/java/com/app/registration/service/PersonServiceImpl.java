@@ -2,6 +2,7 @@ package com.app.registration.service;
 
 import com.app.registration.controller.request.AddressRequest;
 import com.app.registration.controller.request.PersonRequest;
+import com.app.registration.jobs.GeneratePlatesJob;
 import com.app.registration.model.AddressEntity;
 import com.app.registration.model.PersonEntity;
 import com.app.registration.model.dto.AddressDto;
@@ -11,6 +12,7 @@ import com.app.registration.repository.CriteriaFilter.PersonCriteriaFilter;
 import com.app.registration.repository.PersonRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,18 @@ public class PersonServiceImpl implements PersonService {
 
     private PersonRepository personRepository;
     private AddressRepository addressRepository;
+    private PlateService plateService;
+    private Environment environment;
+
+    @Autowired
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
+    }
+
+    @Autowired
+    public void setPlateService(PlateService plateService) {
+        this.plateService = plateService;
+    }
 
     @Autowired
     public void setPersonRepository(PersonRepository personRepository) {
@@ -51,6 +65,7 @@ public class PersonServiceImpl implements PersonService {
         AddressDto addressDto = new AddressDto();
         AddressEntity addressEntity = convertAddressRequestToEntity(addressRequest);
         addressEntity.setSigns(StringUtils.substring(addressEntity.getCity(), 0, 2).toUpperCase());
+        plateService.createIfNeeded(addressEntity.getSigns(), environment.getProperty(GeneratePlatesJob.MIN_PLATES_NUMBER, Long.class, 10L));
         addressDto.setId(addressRepository.
                 create(addressEntity).
                 getId());

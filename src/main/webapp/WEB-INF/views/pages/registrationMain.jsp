@@ -63,7 +63,7 @@
                 </div>
                 <div class="row">
                 	<div class="col-md-5 col-md-offset-1">
-		                <form class="navbar-form navbar-left">
+		                <form id="topMenu" class="navbar-form navbar-left hide">
 		                    <div ng-show="nav.person" id="createPersonTopMenu">
 		                        <button id="createUserButton" class="btn btn-default" type="button" ng-click="createView(0)">
 		                            Utwórz
@@ -95,7 +95,7 @@
 		                        <button id="createRegistrationButton" class="btn btn-default" type="button" ng-click="createView(3)">
 		                            Utwórz
 		                        </button>
-		                        <div class="form-group">
+		                        <div class="form-group hi">
 		                            <input ng-model="search.registration" type="text" class="form-control" placeholder="Numer karty pojazdu">
 		                        </div>
 		                        <button type="button" ng-click="search(search.registration , 3)" class="btn btn-default" >Szukaj</button>

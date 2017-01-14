@@ -96,13 +96,17 @@ public class InsuranceAgreementServiceImpl implements InsuranceAgreementService 
         insuranceAgreementEntity.setInsuranceCompanyName(insuranceDto.getInsuranceCompanyName());
         insuranceAgreementEntity.setInsuranceNumber(insuranceDto.getInsuranceNumber());
         insuranceAgreementEntity.setPurchaseDate(insuranceDto.getPurchaseDate());
-        insuranceAgreementEntity.setOtherOwner(insuranceDto.getOtherOwnerId().stream().map(s -> personRepository.findByPesel(s)).collect(Collectors.toList()));
+        if(!insuranceDto.getOtherOwnerId().isEmpty()) {
+            insuranceAgreementEntity.setOtherOwner(insuranceDto.getOtherOwnerId().stream().map(s -> personRepository.findByPesel(s)).collect(Collectors.toList()));
+        }
         return insuranceAgreementEntity;
     }
 
     private InsuranceAgreementDto convertInsuranceEntityToDto(InsuranceAgreementEntity insuranceAgreementEntity){
         InsuranceAgreementDto insuranceAgreementDto = new InsuranceAgreementDto();
-        insuranceAgreementDto.setOtherOwnerId(insuranceAgreementEntity.getOtherOwner().stream().map(PersonEntity::getPesel).collect(Collectors.toList()));
+        if(insuranceAgreementEntity.getOtherOwner() != null) {
+            insuranceAgreementDto.setOtherOwnerId(insuranceAgreementEntity.getOtherOwner().stream().map(PersonEntity::getPesel).collect(Collectors.toList()));
+        }
         insuranceAgreementDto.setPurchaseDate(insuranceAgreementEntity.getPurchaseDate());
         insuranceAgreementDto.setInsuranceNumber(insuranceAgreementEntity.getInsuranceNumber());
         insuranceAgreementDto.setInsuranceCompanyName(insuranceAgreementEntity.getInsuranceCompanyName());

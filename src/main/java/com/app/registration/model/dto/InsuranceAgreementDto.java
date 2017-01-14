@@ -3,6 +3,7 @@ package com.app.registration.model.dto;
 import com.app.registration.model.CarEntity;
 import com.app.registration.model.PersonEntity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class InsuranceAgreementDto {
     private Date purchaseDate;
     private String insuranceCompanyName;
     private String buyerPesel;
-    private List<String> otherOwnerId;
+    private List<String> otherOwnerId = new ArrayList<>();
     private String carVin;
 
     public String getInsuranceNumber() {

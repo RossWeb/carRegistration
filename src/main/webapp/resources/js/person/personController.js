@@ -7,6 +7,7 @@ mainApp.controller('personController', function($scope, $http, personService, ad
         $scope.owner.name = "";
         $scope.owner.surname = "";
         $scope.owner.phoneNumber = "";
+        $scope.owner.addressId = "";
         $scope.address.city = "";
         $scope.address.street = "";
         $scope.address.postCode = "";
@@ -16,16 +17,17 @@ mainApp.controller('personController', function($scope, $http, personService, ad
         $scope.owner = {};
         $scope.address = {};
         $scope.owner.edit = {};
+        $scope.address.edit = {};
         $scope.owner.edit.visible = false;
-        $scope.owner.pesel = personData.pesel;
-        $scope.owner.name = personData.name;
-        $scope.owner.surname = personData.surname;
-        $scope.owner.phoneNumber = personData.phoneNumber;
+        $scope.owner.edit.pesel = personData.pesel;
+        $scope.owner.edit.name = personData.name;
+        $scope.owner.edit.surname = personData.surname;
+        $scope.owner.edit.phoneNumber = personData.phoneNumber;
         addressService.findAddressById(personData.addressId)
         .then(function (response) {
-            $scope.address.city = response.addressDto.city;
-            $scope.address.street = response.addressDto.street;
-            $scope.address.postCode = response.addressDto.postCode;
+            $scope.address.edit.city = response.addressDto.city;
+            $scope.address.edit.street = response.addressDto.street;
+            $scope.address.edit.postCode = response.addressDto.postCode;
         })
         .catch(function (response) {
             alert( "failure message: " + JSON.stringify({data: response}));
@@ -87,6 +89,7 @@ mainApp.controller('personController', function($scope, $http, personService, ad
 
         return addressService.saveAddress(newAddressData)
         .then(function (response) {
+        	$scope.owner.addressId = response.addressDto.id;
             personService.setAddressId(response.addressDto.id);
             var newPersonData = {
                 personDto : {
@@ -161,6 +164,7 @@ mainApp.controller('personController', function($scope, $http, personService, ad
 	    var response = createPerson();
 	    response.then(function (response) {
             setOwner(response);
+            fillPersonScope($scope.owner);
             resetForm();
         });
 	};

@@ -8,22 +8,28 @@ import com.app.registration.model.dto.AddressDto;
  */
 public class AddressDtoBuilder {
 
-    private AddressDto addressDto = new AddressDto();
+    private String city;
+    private String setPostCode;
+    private String street;
 
     public AddressDtoBuilder setAddress(String city, String postCode, String street){
-        addressDto.setCity(city);
-        addressDto.setStreet(street);
-        addressDto.setPostCode(postCode);
+        this.setPostCode = postCode;
+        this.street = street;
+        this.city = city;
         return this;
     }
 
     public AddressDto build(){
+        AddressDto addressDto = new AddressDto();
+        addressDto.setCity(city);
+        addressDto.setPostCode(setPostCode);
+        addressDto.setStreet(street);
         return addressDto;
     }
 
     public AddressRequest decorateRequest(){
         AddressRequest addressRequest = new AddressRequest();
-        addressRequest.setAddressDto(addressDto);
+        addressRequest.setAddressDto(build());
         return addressRequest;
     }
 }

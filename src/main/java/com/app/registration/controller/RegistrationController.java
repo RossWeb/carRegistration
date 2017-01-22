@@ -109,10 +109,11 @@ public class RegistrationController {
         proofRegistrationService.removeProofRegistration(cardVehicleNumber);
     }
 
-    @RequestMapping(value = "/finalize", method = RequestMethod.POST)
+    @RequestMapping(value = "/finalize/{cardVehicleNumber}", method = RequestMethod.GET)
     @ResponseBody
-    public ModelAndView doWelcome() {
-        final ModelMap model = new ModelMap();
-        return new ModelAndView("pages/welcome", model);
+    public ProofRegistrationResponse doFinalizeRegistration(@PathVariable("cardVehicleNumber") String cardVehicleNumber) {
+        ProofRegistrationResponse proofRegistrationResponse = new ProofRegistrationResponse();
+        proofRegistrationResponse.setProofRegistrationDto(proofRegistrationService.finalizeRegistration(cardVehicleNumber));
+        return proofRegistrationResponse;
     }
 }

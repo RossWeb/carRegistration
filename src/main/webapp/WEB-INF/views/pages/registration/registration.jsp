@@ -33,9 +33,9 @@
                                 <td>{{proofRegistration.registrationDate}}</td>
                                 <td>{{proofRegistration.registrationValidDate}}</td>
                                 <td>{{proofRegistration.carVin}}</td>
-                                <td>{{proofRegistration.temporaryProof}}</td>
+                                <td>{{proofRegistration.temporaryProof == true ? 'tak' : 'nie'}}</td>
                                 <td>
-                                    <button type="button" class="btn btn-success" ng-click="finalizeProofRegistration(proofRegistration.numberCardVehicle)">Wymień</button>
+                                    <button type="button" class="btn btn-success" ng-show="proofRegistration.temporaryProof" ng-click="finalizeProofRegistration(proofRegistration.numberCardVehicle)">Wymień</button>
                                     <button type="button" class="btn btn-danger" ng-click="removeProofRegistration(proofRegistration.numberCardVehicle)">Usuń</button>
                                 </td>
                             </tr>
@@ -96,3 +96,4 @@
             </div>
         </div>
     </div>
+</div>

@@ -52,6 +52,7 @@ mainApp.controller('personController', function($scope, $http, personService, ad
     var updatePerson = function(){
         var newAddressData = {
             addressDto : {
+                  id : personService.getAddressId(),
                   city : $scope.address.edit.city,
                   street : $scope.address.edit.street,
                   postCode : $scope.address.edit.postCode
@@ -63,10 +64,10 @@ mainApp.controller('personController', function($scope, $http, personService, ad
             personService.setAddressId(response.addressDto.id);
             var newPersonData = {
                 personDto : {
-                    pesel : $scope.owner.pesel,
-                    name : $scope.owner.name,
-                    surname : $scope.owner.surname,
-                    phoneNumber : $scope.owner.phoneNumber,
+                    pesel : $scope.owner.edit.pesel,
+                    name : $scope.owner.edit.name,
+                    surname : $scope.owner.edit.surname,
+                    phoneNumber : $scope.owner.edit.phoneNumber,
                     addressId : response.addressDto.id
                 }
             };
@@ -147,6 +148,7 @@ mainApp.controller('personController', function($scope, $http, personService, ad
         personService.findPersonById(pesel)
         .then(function (response) {
             fillPersonScope(response.personDto);
+            personService.setAddressId(response.personDto.addressId);
             setOwner(response);
         })
         .catch(function (response) {

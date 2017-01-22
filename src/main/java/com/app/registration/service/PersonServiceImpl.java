@@ -120,7 +120,10 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public AddressDto updateAddress(AddressRequest addressRequest) {
         AddressDto addressDto = new AddressDto();
-        addressDto.setId(addressRepository.update(convertAddressRequestToEntity(addressRequest)).getId());
+        AddressEntity foundedAddress = addressRepository.findById(addressRequest.getAddressDto().getId());
+        AddressEntity updateAddress = convertAddressRequestToEntity(addressRequest);
+        updateAddress.setSigns(foundedAddress.getSigns());
+        addressDto.setId(addressRepository.update(updateAddress).getId());
         return addressDto;
     }
 

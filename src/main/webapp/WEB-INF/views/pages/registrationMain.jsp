@@ -9,6 +9,7 @@
 <script src="resources/js/angular.min.js"></script>
 <script src="resources/js/bootstrap.min.js"></script>
 <script src="resources/js/jquery.datetimepicker.full.min.js"></script>
+<script src="resources/js/angularModalService.min.js"></script>
 <script src="resources/js/mainApp.js"></script>
 <script src="resources/js/service/personService.js"></script>
 <script src="resources/js/service/addressService.js"></script>
@@ -21,12 +22,13 @@
 <script src="resources/js/car/carController.js"></script>
 <script src="resources/js/insurance/insuranceController.js"></script>
 <script src="resources/js/proofRegistration/proofRegistrationController.js"></script>
+<script src="resources/js/proofRegistration/finalizeProofRegistrationModalController.js"></script>
 <script src="resources/js/main/mainPageController.js"></script>
 
 
 </head>
 <body ng-app = "mainApp" ng-controller = "viewController">
-    <h2>Registration</h2>
+    <h2>Rejestracja pojazdu</h2>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->

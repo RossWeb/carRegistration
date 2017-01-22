@@ -18,6 +18,7 @@ public class ProofRegistrationEntity implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
+    private Long id;
     private String numberCardVehicle;
     private PlateEntity plate;
     private Date firstRegistrationDate;
@@ -29,6 +30,15 @@ public class ProofRegistrationEntity implements Serializable{
     private boolean isTemporaryProof;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Column(name = "NUMBER_CARD_VEHICLE", nullable = false)
     public String getNumberCardVehicle() {
         return numberCardVehicle;

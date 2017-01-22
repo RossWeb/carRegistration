@@ -15,6 +15,7 @@ public interface ProofRegistrationService {
     List<ProofRegistrationDto> getAllProofRegistrations();
     ProofRegistrationDto searchByCardVehicleNumber(String cardVehicleNumber);
     ProofRegistrationDto update(ProofRegistrationRequest proofRegistrationRequest);
+    ProofRegistrationDto finalizeRegistration(String vehicleCardNumber);
     void removeProofRegistration(String numberCardVehicle);
     Long getTemporaryRegistrationsCount();
     Long getRegistrationsCount();

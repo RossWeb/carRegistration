@@ -66,7 +66,9 @@ mainApp.controller('carController', function($scope, $http, carService, personSe
         carService.findCarByVin(vin)
         .then(function (response) {
             fillCarScope(response.carDto);
-            setCar(response);
+            if(personService.getPersonId() != null){
+                setCar(response);
+            }
 
         })
         .catch(function (response) {
@@ -98,10 +100,10 @@ mainApp.controller('carController', function($scope, $http, carService, personSe
     $scope.updateCar = function(){
         var newCarData = {
             carDto : {
-                name : $scope.car.name,
-                vin : $scope.car.vin,
-                productionDate : $scope.car.productionDate,
-                ownerPesel : $scope.car.ownerPesel
+                name : $scope.car.edit.name,
+                vin : $scope.car.edit.vin,
+                productionDate : $scope.car.edit.productionDate,
+                ownerPesel : $scope.car.edit.ownerPesel
             }
         };
 

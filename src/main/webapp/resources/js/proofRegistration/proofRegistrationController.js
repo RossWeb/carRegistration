@@ -1,4 +1,5 @@
-mainApp.controller('proofRegistrationController', function($scope, $http, proofRegistrationService, carService, insuranceService, personService) {
+mainApp.controller('proofRegistrationController', function($scope, $http, proofRegistrationService, carService,
+ insuranceService, personService, ModalService) {
 
     $(function () {
         $.datetimepicker.setLocale('pl');
@@ -59,6 +60,47 @@ mainApp.controller('proofRegistrationController', function($scope, $http, proofR
            });
     };
 
+    var getModalFinalizeTemplate = function(numberCardVehicle){
+        return "" +
+        "<div class='modal fade'>" +
+            "<div class='modal-dialog'>" +
+                "<div class='modal-content'>" +
+                    "<div class='modal-header'>" +
+                        "<h4 class='modal-title'>Wymiana dowodu rejestracyjnego</h4>" +
+                    "</div>" +
+                    "<div class='modal-body'>" +
+                        "<p>Aktualny numer karty pojadu to : " + numberCardVehicle + " </p>" +
+                        "<p ng-show='printerStatus'>Status drukowania : {{printerStatus}} </p>" +
+                    "</div>" +
+                    "<div class='modal-footer'>" +
+                        "<button type='button' ng-click='dismissModal(false)' class='btn btn-default' data-dismiss='modal'>Zamknij</button>" +
+                        "<button type='button' ng-click='print()' class='btn btn-primary' data-dismiss='modal'>Drukuj</button>" +
+                    "</div>" +
+                "</div>" +
+            "</div>" +
+        "</div>"
+    };
+
+
+    $scope.finalizeProofRegistration = function(numberCardVehicle) {
+        proofRegistrationService.finalizeRegistration(numberCardVehicle)
+        .then(function (response) {
+           ModalService.showModal({
+               template: getModalFinalizeTemplate(response.proofRegistrationDto.numberCardVehicle),
+               controller: "finalizeProofRegistrationModalController"
+           }).then(function(modal) {
+               modal.element.modal();
+               modal.close.then(function() {
+                   getRegistrationList();
+               });
+           });
+        })
+        .catch(function (response) {
+           alert( "failure message: " + JSON.stringify({data: response}));
+        });
+
+    };
+
     $scope.$on('REGISTRATION_LIST_EVENT', function() {
         getRegistrationList();
     });
@@ -67,7 +109,7 @@ mainApp.controller('proofRegistrationController', function($scope, $http, proofR
         createProofRegistrationLoadTemplate();
     });
 
-    $scope.removeRegistration = function(numberCardVehicle){
+    $scope.removeProofRegistration = function(numberCardVehicle){
        proofRegistrationService.deleteRegistration(numberCardVehicle)
        .then(function (response) {
            getRegistrationList();

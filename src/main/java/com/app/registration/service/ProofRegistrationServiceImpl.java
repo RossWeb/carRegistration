@@ -8,6 +8,7 @@ import com.app.registration.repository.CarRepository;
 import com.app.registration.repository.PersonRepository;
 import com.app.registration.repository.PlateRepository;
 import com.app.registration.repository.ProofRegistrationRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -85,6 +86,18 @@ public class ProofRegistrationServiceImpl implements ProofRegistrationService {
     public ProofRegistrationDto update(ProofRegistrationRequest proofRegistrationRequest) {
         ProofRegistrationDto proofRegistrationDto = new ProofRegistrationDto();
         proofRegistrationDto.setNumberCardVehicle(proofRegistrationRepository.update(convertDtoToEntity(proofRegistrationRequest.getProofRegistrationDto())).getNumberCardVehicle());
+        return proofRegistrationDto;
+    }
+
+    @Override
+    public ProofRegistrationDto finalizeRegistration(String vehicleCardNumber) {
+        String newVehicleCardNumber = StringUtils.removeStart(vehicleCardNumber, "T");
+        ProofRegistrationDto proofRegistrationDto = new ProofRegistrationDto();
+        ProofRegistrationEntity entity = proofRegistrationRepository.findByNumberCardVehicle(vehicleCardNumber);
+        entity.setNumberCardVehicle(newVehicleCardNumber);
+        entity.setTemporaryProof(false);
+        proofRegistrationRepository.update(entity);
+        proofRegistrationDto.setNumberCardVehicle(newVehicleCardNumber);
         return proofRegistrationDto;
     }
 

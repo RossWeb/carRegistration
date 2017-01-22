@@ -37,6 +37,10 @@ mainApp.service('proofRegistrationService', function($http, $q) {
         return deferredResult($q, result);
     };
 
+    this.finalizeRegistration = function(number){
+        var result = $http.get('registration/finalize/'+ number);
+        return deferredResult($q, result);
+    };
     this.getRegistrationList =  function(){
         var result = $http.get('registration/getAll');
         return deferredResult($q, result);

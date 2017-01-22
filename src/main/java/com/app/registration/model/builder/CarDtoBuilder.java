@@ -10,27 +10,36 @@ import java.util.Date;
  */
 public class CarDtoBuilder {
 
-    private CarDto carDto = new CarDto();
+    private String name;
+    private String vin;
+    private Date productionDate;
+    private String ownerPesel;
+
 
     public CarDtoBuilder setCarCredentials(String vin, String name, Date productionDate){
-        carDto.setVin(vin);
-        carDto.setName(name);
-        carDto.setProductionDate(productionDate);
+        this.vin = vin;
+        this.name = name;
+        this.productionDate = productionDate;
         return this;
     }
 
     public CarDtoBuilder setOwner(String ownerPesel){
-        carDto.setOwnerPesel(ownerPesel);
+        this.ownerPesel = ownerPesel;
         return this;
     }
 
     public CarDto build(){
+        CarDto carDto = new CarDto();
+        carDto.setOwnerPesel(ownerPesel);
+        carDto.setVin(vin);
+        carDto.setProductionDate(productionDate);
+        carDto.setName(name);
         return carDto;
     }
 
     public CarRequest decorateRequest(){
         CarRequest carRequest = new CarRequest();
-        carRequest.setCarDto(carDto);
+        carRequest.setCarDto(build());
         return carRequest;
     }
 }

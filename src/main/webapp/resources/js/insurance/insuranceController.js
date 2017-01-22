@@ -77,7 +77,9 @@ mainApp.controller('insuranceController', function($scope, $http, insuranceServi
         insuranceService.findInsuranceByNumber(insuranceNumber)
         .then(function (response) {
             fillInsuranceScope(response.insuranceAgreementList[0])
-            setInsurance(response.insuranceAgreementList[0]);
+            if(carService.getCarId() != null){
+                setInsurance(response.insuranceAgreementList[0]);
+            }
         })
         .catch(function (response) {
             alert( "failure message: " + JSON.stringify({data: response}));
@@ -113,13 +115,13 @@ mainApp.controller('insuranceController', function($scope, $http, insuranceServi
 
     $scope.updateInsurance = function(){
         var newInsuranceData = {
-            insuranceDto : {
-                insuranceNumber : $scope.insurance.insuranceNumber,
-                purchaseDate : $scope.insurance.purchaseDate,
-                insuranceCompanyName : $scope.insurance.insuranceCompanyName,
-                buyer : $scope.insurance.owner,
-                otherOwner : $scope.insurance.otherOwner,
-                car : $scope.insurance.car
+            insuranceAgreementDto : {
+                insuranceNumber : $scope.insurance.edit.insuranceNumber,
+                purchaseDate : $scope.insurance.edit.purchaseDate,
+                insuranceCompanyName : $scope.insurance.edit.insuranceCompanyName,
+                buyerPesel : $scope.insurance.edit.owner,
+                otherOwnerId : $scope.insurance.edit.otherOwners,
+                carVin : $scope.insurance.edit.car
             }
         };
 

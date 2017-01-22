@@ -8,32 +8,42 @@ import com.app.registration.model.dto.PersonDto;
  */
 public class PersonDtoBuilder {
 
-    private PersonDto personDto = new PersonDto();
+    private String pesel;
+    private String name;
+    private String surname;
+    private String phoneNumber;
+    private Long addressId;
 
     public PersonDtoBuilder setPersonName(String name, String surname){
-        this.personDto.setName(name);
-        this.personDto.setSurname(surname);
+        this.name = name;
+        this.surname = surname;
         return this;
     }
 
     public PersonDtoBuilder setPersonPeselAndPhone(String pesel, String phone){
-        this.personDto.setPesel(pesel);
-        this.personDto.setPhoneNumber(phone);
+        this.pesel = pesel;
+        this.phoneNumber = phone;
         return this;
     }
 
     public PersonDtoBuilder setAddressIdAfterCreated(Long addressId){
-        this.personDto.setAddressId(addressId);
+        this.addressId = addressId;
         return this;
     }
 
     public PersonDto build(){
+        PersonDto personDto = new PersonDto();
+        personDto.setAddressId(addressId);
+        personDto.setName(name);
+        personDto.setPhoneNumber(phoneNumber);
+        personDto.setPesel(pesel);
+        personDto.setSurname(surname);
         return personDto;
     }
 
     public PersonRequest decorateRequest(){
         PersonRequest personRequest = new PersonRequest();
-        personRequest.setPersonDto(personDto);
+        personRequest.setPersonDto(build());
         return personRequest;
     }
 }

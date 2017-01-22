@@ -60,6 +60,14 @@ public class RegistrationController {
         return proofRegistrationResponse;
     }
 
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    @ResponseBody
+    public ProofRegistrationsResponse searchRegistration(@RequestBody ProofRegistrationRequest proofRegistrationRequest) {
+        ProofRegistrationsResponse proofRegistrationsResponse = new ProofRegistrationsResponse();
+        proofRegistrationsResponse.setProofRegistrationList(proofRegistrationService.find(proofRegistrationRequest));
+        return proofRegistrationsResponse;
+    }
+
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     @ResponseBody
     public ProofRegistrationResponse editRegistration(@RequestBody ProofRegistrationRequest proofRegistrationRequest) {

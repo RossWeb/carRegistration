@@ -1,6 +1,6 @@
 mainApp.service('carService', function($http, $q) {
     var car = {
-        carId : "",
+        carId : "Brak",
     };
 
     this.getCarId = function(){
@@ -22,6 +22,10 @@ mainApp.service('carService', function($http, $q) {
         return deferredResult($q, result);
     };
 
+    this.findCar = function(dataObj){
+        var result = $http.post('car/search', dataObj);
+        return deferredResult($q, result);
+    };
     this.findCarByVin = function(dataObj){
         var result = $http.get('car/searchByVin/' + dataObj);
         return deferredResult($q, result);

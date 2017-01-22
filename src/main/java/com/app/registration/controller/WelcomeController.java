@@ -72,39 +72,43 @@ public class WelcomeController {
     }
 
     private void createDebugDataToDatabase(){
-        AddressDto addressDto = personService.createAddress(
+        for (int i = 0; i < 10; i++) {
+            AddressDto addressDto = personService.createAddress(
                 new AddressDtoBuilder()
-                        .setAddress("Warszawa", "00-001", "Kwiatowa 1")
-                        .decorateRequest());
-        PersonDto personDto1 = personService.createPerson(new PersonDtoBuilder()
-                .setPersonName("Name1", "Surname1")
-                .setPersonPeselAndPhone("12345678910", "99999999")
-                .setAddressIdAfterCreated(addressDto.getId())
-                .decorateRequest());
-        PersonDto personDto2 = personService.createPerson(new PersonDtoBuilder()
-                .setPersonName("Name2", "Surname2")
-                .setPersonPeselAndPhone("22345678910", "99999999")
-                .setAddressIdAfterCreated(addressDto.getId())
-                .decorateRequest());
-        CarDto carDto = carService.createCar(new CarDtoBuilder()
-                .setCarCredentials("123456789", "Opel", new Date())
-                .setOwner(personDto1.getPesel())
-                .decorateRequest());
-        plateService.createByCount("WA", 5L);
-        InsuranceAgreementDto insuranceAgreementDto = insuranceAgreementService.create(new InsuranceDtoBuilder()
-                .setInsuranceCredentials(RandomStringUtils.randomAlphanumeric(9), "Company 1", new Date())
-                .setInsuranceCar(carDto.getVin())
-                .setInsuranceOwner(personDto1.getPesel())
-                .addInsuranceOtherOwner(personDto2.getPesel())
-                .decorateRequest());
-        ProofRegistrationDto proofRegistrationDto = proofRegistrationService.createProofRegistration(new ProofRegistrationDtoBuilder()
-                .setRegistrationMainCredentials(proofRegistrationService.getProofRegistrationNumber(true),
-                        plateService.findAll().stream().findFirst().get().getPlateNumber(),
-                        true)
-                .setRegistrationDateCredentials(new Date(), new Date())
-                .setOwnerAndCar(personDto1.getPesel(), carDto.getVin())
-                .addOtherOwner(personDto2.getPesel())
-                .decorateRequest());
-        plateService.changePlateStatus(proofRegistrationDto.getPlateNumber());
+                    .setAddress("Warszawa", "00-001", "Kwiatowa " + i)
+                    .decorateRequest());
+            PersonDto personDto1 = personService.createPerson(new PersonDtoBuilder()
+                    .setPersonName("Name1", "Surname" + i)
+                    .setPersonPeselAndPhone("123456789" + i, "99999999")
+                    .setAddressIdAfterCreated(addressDto.getId())
+                    .decorateRequest());
+            PersonDto personDto2 = personService.createPerson(new PersonDtoBuilder()
+                    .setPersonName("Name2", "Surname" + i)
+                    .setPersonPeselAndPhone("223456789" + i, "99999999")
+                    .setAddressIdAfterCreated(addressDto.getId())
+                    .decorateRequest());
+            CarDto carDto = carService.createCar(new CarDtoBuilder()
+                    .setCarCredentials("1234567" + i, "Opel", new Date())
+                    .setOwner(personDto1.getPesel())
+                    .decorateRequest());
+            plateService.createByCount("WA", 10L);
+            InsuranceAgreementDto insuranceAgreementDto = insuranceAgreementService.create(new InsuranceDtoBuilder()
+                    .setInsuranceCredentials(RandomStringUtils.randomAlphanumeric(9), "Company " + i, new Date())
+                    .setInsuranceCar(carDto.getVin())
+                    .setInsuranceOwner(personDto1.getPesel())
+                    .addInsuranceOtherOwner(personDto2.getPesel())
+                    .decorateRequest());
+            ProofRegistrationDto proofRegistrationDto = proofRegistrationService.createProofRegistration(new ProofRegistrationDtoBuilder()
+                    .setRegistrationMainCredentials(proofRegistrationService.getProofRegistrationNumber(true),
+                            plateService.findAll().stream().findFirst().get().getPlateNumber(),
+                            true)
+                    .setRegistrationDateCredentials(new Date(), new Date())
+                    .setOwnerAndCar(personDto1.getPesel(), carDto.getVin())
+                    .addOtherOwner(personDto2.getPesel())
+                    .decorateRequest());
+            plateService.changePlateStatus(proofRegistrationDto.getPlateNumber());
+        }
+
+
     }
 }

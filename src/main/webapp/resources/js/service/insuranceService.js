@@ -1,6 +1,6 @@
 mainApp.service('insuranceService', function($http, $q) {
     var insurance = {
-        insuranceId : '',
+        insuranceId : 'Brak',
         otherOwnersId : []
     };
 
@@ -37,6 +37,10 @@ mainApp.service('insuranceService', function($http, $q) {
         return deferredResult($q, result);
     }
 
+    this.findInsurance = function(dataObj){
+        var result = $http.post('insurance/search' , dataObj);
+        return deferredResult($q, result);
+    }
     this.deleteInsurance = function(number){
         var result = $http.get('insurance/delete/'+ number);
         return deferredResult($q, result);

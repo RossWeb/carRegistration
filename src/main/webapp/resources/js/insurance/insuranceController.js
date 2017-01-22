@@ -16,7 +16,17 @@ mainApp.controller('insuranceController', function($scope, $http, insuranceServi
         $scope.insurance.otherOwners = "";
     };
 
-    var getInsuranceList = function(){
+    var getInsuranceByCriteria =  function(insuranceCriteria){
+        insuranceService.findInsurance(insuranceCriteria)
+        .then(function (response) {
+            $scope.insurances = response.insuranceAgreementList;
+        })
+        .catch(function (response) {
+            alert( "failure message: " + JSON.stringify({data: response}));
+        });
+    };
+
+    var getAllInsurance = function(){
         insuranceService.getInsuranceList()
         .then(function (response) {
             $scope.insurances = response.insuranceAgreementList;
@@ -26,9 +36,25 @@ mainApp.controller('insuranceController', function($scope, $http, insuranceServi
         });
     };
 
+    var getInsuranceList = function(){
+        var insuranceData = {
+            insuranceAgreementDto : {
+                buyerPesel : personService.getPersonId()
+            }
+        };
+
+        if(insuranceData.insuranceAgreementDto.buyerPesel == ""){
+            getAllInsurance();
+        }else{
+            getInsuranceByCriteria(insuranceData);
+        }
+    };
+
     var setInsurance = function(insuranceAgreement){
-        insuranceService.setInsuranceId(insuranceAgreement.insuranceNumber);
-        insuranceService.addOtherOwnerId(insuranceAgreement.otherOwnerId);
+        if(personService.getPersonId() != ""){
+            insuranceService.setInsuranceId(insuranceAgreement.insuranceNumber);
+            insuranceService.addOtherOwnerId(insuranceAgreement.otherOwnerId);
+        }
         $scope.$emit('INSURANCE_SET_EVENT', '');
     };
 
@@ -77,9 +103,7 @@ mainApp.controller('insuranceController', function($scope, $http, insuranceServi
         insuranceService.findInsuranceByNumber(insuranceNumber)
         .then(function (response) {
             fillInsuranceScope(response.insuranceAgreementList[0])
-            if(carService.getCarId() != null){
-                setInsurance(response.insuranceAgreementList[0]);
-            }
+            setInsurance(response.insuranceAgreementList[0]);
         })
         .catch(function (response) {
             alert( "failure message: " + JSON.stringify({data: response}));

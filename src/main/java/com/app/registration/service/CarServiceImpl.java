@@ -6,6 +6,7 @@ import com.app.registration.model.CarEntity;
 import com.app.registration.model.PersonEntity;
 import com.app.registration.model.dto.CarDto;
 import com.app.registration.repository.CarRepository;
+import com.app.registration.repository.CriteriaFilter.CarCriteriaFilter;
 import com.app.registration.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,6 +61,12 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    public List<CarDto> find(CarRequest carRequest) {
+        return carRepository.find(convertDtoToFiler(carRequest.getCarDto()))
+                .stream().map(this::convertCarEntityToDto).collect(Collectors.toList());
+    }
+
+    @Override
     public CarDto updateCar(CarRequest carRequest) {
         CarDto carDto = new CarDto();
         carDto.setVin(carRepository.update(convertCarRequestToEntity(carRequest)).getVin());
@@ -82,6 +89,15 @@ public class CarServiceImpl implements CarService {
         carDto.setProductionDate(carEntity.getProductionDate());
         carDto.setOwnerPesel(carEntity.getOwner().getPesel());
         return carDto;
+    }
+
+    private CarCriteriaFilter convertDtoToFiler(CarDto dto) {
+        CarCriteriaFilter carCriteriaFilter = new CarCriteriaFilter();
+        carCriteriaFilter.setVin(dto.getVin());
+        carCriteriaFilter.setName(dto.getName());
+        carCriteriaFilter.setOwnerPesel(personRepository.findByPesel(dto.getOwnerPesel()));
+        carCriteriaFilter.setProductionDate(dto.getProductionDate());
+        return carCriteriaFilter;
     }
 }
 

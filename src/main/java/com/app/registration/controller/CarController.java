@@ -6,9 +6,7 @@ import com.app.registration.controller.response.CarsResponse;
 import com.app.registration.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Created by konrad on 21.11.16.
@@ -54,6 +52,14 @@ public class CarController {
         CarResponse carResponse = new CarResponse();
         carResponse.setCarDto(carService.updateCar(carRequest));
         return carResponse;
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    @ResponseBody
+    public CarsResponse searchCar(@RequestBody CarRequest carRequest) {
+        CarsResponse carsResponse = new CarsResponse();
+        carsResponse.setCarsDto(carService.find(carRequest));
+        return carsResponse;
     }
 
     @RequestMapping(value = "/delete/{vin}", method = RequestMethod.GET)

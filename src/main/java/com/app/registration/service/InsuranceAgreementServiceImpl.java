@@ -70,7 +70,6 @@ public class InsuranceAgreementServiceImpl implements InsuranceAgreementService 
     @Override
     public InsuranceAgreementDto update(InsuranceRequest insuranceRequest) {
         InsuranceAgreementDto insuranceAgreementDto = new InsuranceAgreementDto();
-        //todo dorobic find po id
         insuranceAgreementDto.setInsuranceNumber(insuranceAgreementRepository.update(convertInsuranceDtoToEntity(insuranceRequest.getInsuranceAgreementDto())).getInsuranceNumber());
         return insuranceAgreementDto;
     }

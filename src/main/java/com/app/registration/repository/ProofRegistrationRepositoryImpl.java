@@ -24,8 +24,8 @@ public class ProofRegistrationRepositoryImpl extends AbstractGenericRepositoryWi
         Criteria proofRegistrationCriteria = getSession().createCriteria(ProofRegistrationEntity.class);
         proofRegistrationCriteria.add(Restrictions.disjunction(
                 Restrictions.eq("car",proofRegistrationFilter.getCar()),
-                Restrictions.eq("isTemporaryProof",proofRegistrationFilter.isTemporaryProof()),
-                Restrictions.eq("plateNumber",proofRegistrationFilter.getPlateNumber()),
+                Restrictions.eq("temporaryProof",proofRegistrationFilter.isTemporaryProof()),
+                Restrictions.eq("plate",proofRegistrationFilter.getPlateNumber()),
                 Restrictions.eq("mainOwner",proofRegistrationFilter.getMainOwner()),
                 Restrictions.like("numberCardVehicle",proofRegistrationFilter.getNumberCardVehicle(), MatchMode.ANYWHERE),
                 Restrictions.eq("registrationDate",proofRegistrationFilter.getRegistrationDate())));

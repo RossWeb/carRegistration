@@ -15,5 +15,6 @@ public interface CarService {
     CarDto findCarByVin(String vin);
     void deleteCarByVin(String vin);
     List<CarDto> findAllCars();
+    List<CarDto> find(CarRequest carRequest);
     CarDto updateCar(CarRequest carRequest);
 }

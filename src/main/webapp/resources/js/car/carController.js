@@ -15,8 +15,8 @@ mainApp.controller('carController', function($scope, $http, carService, personSe
         $scope.car.productionDate = "";
     };
 
-    var getCarList = function(){
-        carService.getCarList()
+    var getCarsByCriteria =  function(carCriteria){
+        carService.findCar(carCriteria)
         .then(function (response) {
             $scope.cars = response.carsDto;
         })
@@ -25,8 +25,33 @@ mainApp.controller('carController', function($scope, $http, carService, personSe
         });
     };
 
+    var getAllCars = function(){
+        carService.getCarList()
+        .then(function (response) {
+            $scope.cars = response.carsDto;
+        })
+        .catch(function (response) {
+            alert( "failure message: " + JSON.stringify({data: response}));
+        });
+    }
+    var getCarList = function(){
+        var carData = {
+            carDto : {
+                ownerPesel : personService.getPersonId(),
+            }
+        };
+
+        if(carData.carDto.ownerPesel == ""){
+            getAllCars();
+        }else{
+            getCarsByCriteria(carData);
+        }
+    };
+
     var setCar = function(response){
-        carService.setCarId(response.carDto.vin);
+        if(personService.getPersonId() != ""){
+            carService.setCarId(response.carDto.vin);
+        }
         $scope.$emit('CAR_SET_EVENT', '');
     };
 
@@ -66,10 +91,7 @@ mainApp.controller('carController', function($scope, $http, carService, personSe
         carService.findCarByVin(vin)
         .then(function (response) {
             fillCarScope(response.carDto);
-            if(personService.getPersonId() != null){
-                setCar(response);
-            }
-
+            setCar(response);
         })
         .catch(function (response) {
             alert( "failure message: " + JSON.stringify({data: response}));

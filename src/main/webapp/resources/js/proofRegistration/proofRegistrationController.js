@@ -26,7 +26,17 @@ mainApp.controller('proofRegistrationController', function($scope, $http, proofR
 
     };
 
-    var getRegistrationList = function(){
+    var getRegistrationsByCriteria =  function(registrationCriteria){
+        proofRegistrationService.findRegistrations(registrationCriteria)
+        .then(function (response) {
+            $scope.proofRegistrations = response.proofRegistrationList;
+        })
+        .catch(function (response) {
+            alert( "failure message: " + JSON.stringify({data: response}));
+        });
+    };
+
+    var getAllRegistrations = function(){
         proofRegistrationService.getRegistrationList()
         .then(function (response) {
             $scope.proofRegistrations = response.proofRegistrationList;
@@ -34,6 +44,21 @@ mainApp.controller('proofRegistrationController', function($scope, $http, proofR
         .catch(function (response) {
             alert( "failure message: " + JSON.stringify({data: response}));
         });
+    };
+
+    var getRegistrationList = function(){
+        var registrationData = {
+            proofRegistrationDto : {
+                mainOwnerPesel : personService.getPersonId(),
+            }
+        };
+
+        if(registrationData.proofRegistrationDto.mainOwnerPesel == ""){
+            getAllRegistrations();
+        }else{
+            getRegistrationsByCriteria(registrationData);
+        }
+
     };
 
     var setProofRegistration = function(numberCardVehicle){

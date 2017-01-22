@@ -5,6 +5,7 @@ import com.app.registration.model.PersonEntity;
 import com.app.registration.model.ProofRegistrationEntity;
 import com.app.registration.model.dto.ProofRegistrationDto;
 import com.app.registration.repository.CarRepository;
+import com.app.registration.repository.CriteriaFilter.ProofRegistrationFilter;
 import com.app.registration.repository.PersonRepository;
 import com.app.registration.repository.PlateRepository;
 import com.app.registration.repository.ProofRegistrationRepository;
@@ -75,6 +76,12 @@ public class ProofRegistrationServiceImpl implements ProofRegistrationService {
     @Override
     public List<ProofRegistrationDto> getAllProofRegistrations() {
         return proofRegistrationRepository.findAll().stream().map(this::convertEntityToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProofRegistrationDto> find(ProofRegistrationRequest proofRegistrationRequest) {
+        return proofRegistrationRepository.find(convertDtoToFilter(proofRegistrationRequest.getProofRegistrationDto()))
+                .stream().map(this::convertEntityToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -157,4 +164,14 @@ public class ProofRegistrationServiceImpl implements ProofRegistrationService {
         return proofRegistrationDto;
     }
 
+    private ProofRegistrationFilter convertDtoToFilter(ProofRegistrationDto dto){
+        ProofRegistrationFilter proofRegistrationFilter = new ProofRegistrationFilter();
+        proofRegistrationFilter.setRegistrationDate(dto.getRegistrationDate());
+        proofRegistrationFilter.setTemporaryProof(dto.isTemporaryProof());
+        proofRegistrationFilter.setNumberCardVehicle(dto.getNumberCardVehicle());
+        proofRegistrationFilter.setCar(carRepository.findByVin(dto.getCarVin()));
+        proofRegistrationFilter.setMainOwner(personRepository.findByPesel(dto.getMainOwnerPesel()));
+        proofRegistrationFilter.setPlateNumber(plateRepository.findByPlateNumber(dto.getPlateNumber()));
+        return proofRegistrationFilter;
+    }
 }

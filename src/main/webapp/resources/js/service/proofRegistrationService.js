@@ -27,6 +27,11 @@ mainApp.service('proofRegistrationService', function($http, $q) {
         return deferredResult($q, result);
     }
 
+    this.findRegistrations = function(dataObj){
+        var result = $http.post('registration/search', dataObj);
+        return deferredResult($q, result);
+    }
+
     this.getRegistrationsCount = function(){
         var result = $http.get('registration/getRegistrationsCount');
         return deferredResult($q, result);

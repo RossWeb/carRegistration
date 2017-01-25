@@ -53,12 +53,6 @@ public class WelcomeController {
         this.carService = carService;
     }
 
-    @RequestMapping(value = {"/", "/start"}, method = RequestMethod.GET)
-    public ModelAndView doWelcome() {
-        final ModelMap model = new ModelMap();
-        return new ModelAndView("pages/welcome", model);
-    }
-
     @RequestMapping(value = {"/debug"}, method = RequestMethod.GET)
     @ResponseBody
     public String doDebug() {
